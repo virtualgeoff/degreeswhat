@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Degrees What?</title>
+	<meta name="description" content="Degrees What? is a light-hearted tool for converting
+		temperatures between Celsius (°C), Fahrenheit (°F), Kelvin (K) and other scales.
+		It also shows some interesting facts about angles and temperatures.">
+	<meta name="keywords" content="angle, degrees, temperature, conversion, Celsius, Fahrenheit, Kelvin">
+	<meta name="author" content="Geoff Pack">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" id="theme" type="text/css" href="./main.css">
+	<script src="./main.js"></script>
+	<script src="./data.js"></script>
+</head>
+<body>
+
+	<svg id="compass" width="600" height="600" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+		<g transform="translate(150,150)">
+			<g id="compassCard">
+				<circle cx="0" cy="0" r="130" fill="#fff" stroke="#000" stroke-width="0.5" />
+				<g id="degreeMarks" fill="none" stroke="#000" stroke-width="0.5"></g>
+				<g id="degreeNumbers" fill="#000" font-size="6px" font-family="Geneva, Helvetica Neue, Helvetica, Arial" text-anchor="middle"></g>
+			</g>
+			<g id="angleIndicator">
+				<path d="M 0,0 L 135,0" stroke="#f00" stroke-width="1.0" />
+				<circle cursor="crosshair" cx="0" cy="0" r="2" fill="#f00" />
+			</g>
+			<g id="text1" transform="translate(0,-43)">
+				<rect x="-47" y="-15" width="94" height="30" rx="3" ry="3" fill="rgba(238,238,238,0.95)" stroke="#000" stroke-width="0.5" />
+				<text id="textAngle" x="2" y="7.5" font-size="20px" text-anchor="middle">0.0°</text>
+			</g>
+			<g id="text2" transform="translate(0,43)">
+				<rect x="-47" y="-15" width="94" height="30" rx="3" ry="3" fill="rgba(238,238,238,0.95)" stroke="#000" stroke-width="0.5" />
+				<text id="textC"    x="3" y="-3"  font-size="9px" text-anchor="end">0.0 °C =</text>
+				<text id="textCtoF" x="42" y="-3" font-size="9px" text-anchor="end">32.0 °F</text>
+				<text id="testF"    x="3" y="10"  font-size="9px" text-anchor="end">0.0 °F ℉=</text>
+				<text id="testFtoC" x="42" y="10" font-size="9px" text-anchor="end">-17.8 °C</text>
+			</g>
+		</g>
+	</svg>
+
+	<div id="info1" class="info">
+		<h1>Degrees What?</h1>
+
+		<form>
+			<label class="nobr"><input type="radio" name="goniometer" value="compass"    onclick="Angulator.setType(this.value)" checked> compass</label> &nbsp;
+			<label class="nobr"><input type="radio" name="goniometer" value="protractor" onclick="Angulator.setType(this.value)"> protractor</label>
+		</form>
+
+		<dl class="nobr">
+			<!-- tr id="degrees">
+				<td>0° = </td>
+				<td>0 rad</td>
+			</tr>
+			<tr id="degreesC">
+				<td>0 °C = </td>
+				<td>32 °F</td>
+			</tr>
+			<tr id="degreesF">
+				<td>0 °F = </td>
+				<td>-17.78 °C</td>
+			</tr -->
+		</dl>
+
+		<noscript>
+			<p><b>This site requires Javascript!</b></p>
+		</noscript>
+	</div>
+
+	<div id="info2" class="info">
+		<p data-degrees="-40"><b>-40 °C = -40 °F</b> is the intersection point of the Celsius and Fahrenheit scales</p>
+		<p data-degrees="63">Beeswax has a melting point range of <b>62–64 °C</b></p>
+		<p data-degrees="145">Beeswax has a melting point range of <b>144–147 °F</b></p>
+
+		<!-- other data added here by data.js -->
+
+
+	</div>
+
+</body>
+</html>
