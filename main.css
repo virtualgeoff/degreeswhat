@@ -18,6 +18,10 @@ table {margin:0 0 1em 0; border-collapse:collapse;}
 th {text-align:left;}
 th, td {padding:0.3em 0.5em; border:1px solid rgba(127,127,127,0.15);}
 
+form {margin:0 0 1em 0;}
+form label {display:inline-block; margin-right:0.3em;}
+form input {margin-right:0.5em; white-space:nowrap;}
+
 /* links */
 a {color:#00e; text-decoration:none;}
 a:visited {color:#a0e;}
@@ -27,8 +31,6 @@ nav a:link,    a.close {text-decoration:none; font-weight:bold; color:#003;}
 nav a:visited, a.close:visited {color:#003;}
 nav a:hover,   a.close:hover   {color:#f00;}
 
-form {margin:1em 0;}
-
 
 /* --- LAYOUT --- */
 #compass {display:block; width:100vmin; width:100dvmin; height:100vmin; height:100dvmin; margin:0 auto; padding:0; /*border:1px dotted blue;*/}
@@ -36,16 +38,14 @@ form {margin:1em 0;}
 
 
 /* info */
-#info1 {}
-#info2 {}
+.info {}
 .info h3 {margin:1em 0;}
-
+#info1 {}
 #info1 dl {max-width:10em; margin:1em 0;}
 #info1 dt {margin-top:1em; text-align:left; font-weight:bold;}
 #info1 dd {margin-left:0;  text-align:right;}
 #color span {display:inline-block; min-width:3em;}
 
-p[data-degrees] {display:none;}
 
 
 @media (orientation:portrait) {
