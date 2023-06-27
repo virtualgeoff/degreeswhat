@@ -15,6 +15,16 @@
 </head>
 <body>
 
+	<nav id="nav1">
+		<a href="#about" title="About">
+			<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 40 40" version="1.1">
+				<circle cx="20" cy="20" r="15" stroke="currentColor" stroke-width="3.5" fill="none"/>
+				<circle cx="20" cy="12.5" r="2" stroke="none" fill="currentColor"/>
+				<path stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" d="M20.5 17.5 L20.5 26.5 M17.0 17.5 L20.0 17.5 M16.0 26.5 L25.0 26.5"/>
+			</svg>
+		</a>
+	</nav>
+
 	<svg id="compass" width="600" height="600" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
 		<g transform="translate(150,150)">
 			<g id="compassCard">
@@ -65,9 +75,35 @@
 		<p data-degrees="145">Beeswax has a melting point range of <b>144–147 °F</b></p>
 
 		<!-- other data added here by data.js -->
-
-
 	</div>
+
+	<section id="about">
+		<div>
+			<h2>About</h2>
+			<p><i>Degrees What?</i> is a light-hearted tool for converting temperatures between Celsius (°C), Fahrenheit (°F), Kelvin (K) and other scales. It also shows some interesting facts about angles and temperatures.</p>
+			<noscript><p><b>This site requires JavaScript to work.</b> Page weight is under 30 KB, and there's no advertising or tracking (only a tiny stats script from <a href="https://simpleanalytics.com">Simple Analytics</a>). It's worth it, honest ;)</p></noscript>
+
+			<h3>Tips</h3>
+			<p>You can link directly to an angle (and temperatures) by adding a query string to the URL. e.g. <a href="/?100">?100</a> will link directly to 100°, 100 °C, and 100 °F.</p>
+
+			<h3>Support</h3>
+			<p><i>Degrees What?</i> is free to use, and contains no advertising. If you would like to help support it, please <a target="_blank" href="http://buymeacoffee.com/virtualgeoff">buy me a coffee ☕️</a></p>
+			<!-- div id="support">
+				<script src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="virtualgeoff" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+			</div -->
+
+			<h3>Privacy</h3>
+			<p>We collect aggregate user stats only. No cookies are saved or sent.</p>
+
+			<br>
+			<p class="center"><small>
+				<a href="#" data-address="6d 61 69 6c 74 6f 3a 64 65 67 72 65 65 73 77 68 61 74 40 76 69 72 74 75 61 6c 67 65 6f 66 66 2e 63 6f 6d">Feedback</a> &nbsp; 〜 &nbsp;
+				<a href="https://github.com/virtualgeoff/degreeswhat" target="_blank">Source</a>
+			</small></p>
+
+			<a href="#" class="close">✕</a>
+		</div>
+	</section>
 
 </body>
 </html>

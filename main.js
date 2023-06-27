@@ -221,6 +221,17 @@ const Angulator = (function() {
 		updateAngle();
 	}
 
+	function decodeURL(anchor) {
+		// decodes data in data-address attribute of an anchor tag — used to obfuscate mailto link
+		let input = anchor.dataset.address.replace(/\s+/g, ',').split(',');
+		let output = '';
+
+		for (let i=0; i<input.length; i++) {
+			output += String.fromCodePoint(parseInt(input[i],16));
+		}
+		anchor.href = output;
+	}
+
 	function init() {
 		compass        = $('#compass');
 		compassCard    = $('#compassCard');
@@ -233,6 +244,27 @@ const Angulator = (function() {
 
 		//compass.addEventListener("mousemove", mouseMove);
 		compassCard.addEventListener("mousemove", mouseMove);
+
+		// make overlays
+		$All('section').forEach(item => { item.classList.add('overlay'); }); // visible if JS disabled
+
+		// handle navigation links
+		$All('a[href="#about"], a[href="#settings"]').forEach(link => {
+			link.addEventListener('click', function(e){
+				$(link.hash).style.display = 'block';
+				e.preventDefault();
+			});
+		});
+		$All('a.close').forEach(link => {
+			link.addEventListener('click', function(e){
+				//history.back();
+				link.parentNode.parentNode.style.display = 'none';
+				e.preventDefault();
+			});
+		});
+
+		// decode email URL
+		$All('a[data-address]').forEach( (a) => { decodeURL(a); });
 	}
 
 	return {
