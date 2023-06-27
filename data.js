@@ -9,34 +9,6 @@ var degreesData = {
 	// interesting angles (in °)
 	angles: [
 		[
-			// miscellaneous
-			[0.5,   "is the approximate diameter of the Sun and of the Moon as viewed from Earth"],
-			[5.145, "is the inclination of the Moon's orbit to the to the ecliptic plane (the orbital plane of Earth around the Sun)"],
-			[15,    "is the angle the Earth turns in one hour"],
-			[23.44, "is the angle of the tilt of the Earth's axis"],
-			[6,     "is the angle the minute hand of an analogue clock turns in one minute, and the second had turns in one second"],
-			[30,    "is the angle the hour hand of a (12 hour) analogue clock turns in one hour"],
-			[57.296, "(57°17′44.8″) is one radian (180°/𝛑 exactly)"],
-			[360,   " is 1 revolution, or 1 turn"],
-			// polygons
-			[60,     "is the angle between the sides of an equilateral triangle"],
-			[90,     "is a right angle, the angle between the sides of a square"],
-		],[
-			// polygons2
-			[108,    "pentagon"],
-			[120,    "hexagon"],
-			[128.57, "heptagon (128<sup>4</sup>⁄<sub>7</sub>° exactly)"],
-			[135,    "octagon"],
-			[140,    "nonagon"],
-			[144,    "decagon"],
-			[150,    "dodecagon"],
-		],[
-			// polyhedra
-			[70.529,  "tetrahedron"],
-			[109.471, "octahedron"],
-			[116.565, "dodecahedron"],
-			[138.190, "icosahedron"],
-		],[
 			// turns
 			[30,  1, 12],
 			[45,  1, 8],
@@ -87,6 +59,37 @@ var degreesData = {
 			[337.50, "North-Northwest    (NNW),  the 30th"],
 			[348.75, "North by West      (NbW),  the 31st"],
 			[360.00, "North              (N),    the last (or zeroth)"],
+		],[
+			// miscellaneous
+			[0.5,   "is the approximate diameter of the Sun and of the Moon as viewed from Earth"],
+			[5.145, "is the inclination of the Moon's orbit to the to the ecliptic plane (the orbital plane of Earth around the Sun)"],
+			[15,    "is the angle the Earth turns in one hour"],
+			[23.44, "is the angle of the tilt of the Earth's axis"],
+			[6,     "is the angle the minute hand of an analogue clock turns in one minute, and the second had turns in one second"],
+			[30,    "is the angle the hour hand of a (12 hour) analogue clock turns in one hour"],
+			[34,    "is the angle of repose of dry sand"],
+			[38,    "is the angle of repose of snow"],
+			[45,    "is the angle of repose of gravel and wet sand"],
+			[57.296, "(57°17′44.8″) is one radian (180°/𝛑 exactly)"],
+			[360,   " is 1 revolution, or 1 turn"],
+			// polygons
+			[60,     "is the angle between the sides of an equilateral triangle"],
+			[90,     "is a right angle, the angle between the sides of a square"],
+		],[
+			// polygons2
+			[108,    "pentagon"],
+			[120,    "hexagon"],
+			[128.57, "heptagon (128<sup>4</sup>⁄<sub>7</sub>° exactly)"],
+			[135,    "octagon"],
+			[140,    "nonagon"],
+			[144,    "decagon"],
+			[150,    "dodecagon"],
+		],[
+			// polyhedra
+			[70.529,  "tetrahedron"],
+			[109.471, "octahedron"],
+			[116.565, "dodecahedron"],
+			[138.190, "icosahedron"],
 		],
 	],
 
@@ -96,21 +99,59 @@ var degreesData = {
 			// miscellaneous
 			[287.91, "is the mean surface temperature of the Earth"],
 			[310.15, "is the average normal human body temperature"],
-			[194.69, "is the sublimation point of dry ice (CO₂)"],
+			[194.69, "is the sublimation point of dry ice (CO₂) at standard atmospheric pressure"],
+			[353.41, "is the sublimation point of Naphthalene at standard atmospheric pressure"],
 		],
 		[
-			// melting points
-			[63.23, "Nitrogen (N₂) (−209.86 °C, −345.75 °F)"],
-			[83.81, "Argon (Ar)    (−189.34 °C, −308.81 °F)"],
-			[54.36, "Oxygen (O₂)   (−218.79 °C, −361.82 °F)"],
-			[273.15, "Water"],
-		],
-		[
-			// boiling points
-			[77.355, "Nitrogen (N₂) (−195.795 °C, −320.431 °F)"],
-			[87.302, "Argon (Ar)    (−185.848 °C, −302.526 °F)"],
-			[90.188, "Oxygen (O₂)   (−182.962 °C, −297.332 °F)"],
-			[373.13, "Water"],
+			// melting and boiling points
+			// elements
+			['',      4.22,   "Helium"],
+			[14.01,   20.28,  "Hydrogen"],
+			[54.36,   90.20,  "Oxygen (O₂)"],
+			[63.23,   77.36,  "Nitrogen (N₂)"],
+			[171.6,   239.11, "Chlorine"],
+			[234.43,  629.88, "Mercury"],
+			[302.915, 2673,   "Gallium"],
+			[336.53,  1032,   "Potassium"],
+			[370.87,  1156,   "Sodium"],
+			[386.85,  457.4,  "Iodine"],
+			[388.36,  717.87, "Sulfur"],
+			[429.75,  2345,   "Indium"],
+			[544.7,   1837,   "Bismuth"],
+			[594.22,  1040,   "Cadmium"],
+			[600.61,  2022,   "Lead"],
+			/*
+			[923,     1363,   "Magnesium"],
+			[933.47,  2792,   "Aluminium"],
+			[692.68,  1180,   "Zinc"],
+			[1337.33, 3129,   "Gold"],
+			[1234.93, 2435,   "Silver"],
+			[1357.77, 2835,   "Copper"],
+			[1560,    2742,   "Beryllium"],
+			[1728,    3186,   "Nickel"],
+			[1811,    3134,   "Iron"],
+			[1941,    3560,   "Titanium"],
+			['' ,     4000,   "Carbon"],
+			[2041.4,  4098,   "Platinum"],
+			[3290,    5731,   "Tantalum"],
+			[3695,    5828,   "Tungsten"],
+			*/
+
+			// compounds
+			[90.694,  111.6,  "Methane"],
+			[90.4,    184.6,  "Ethane"],
+			[85.5,    230.90, "Propane"],
+			[133,     272,    "Butane"],
+			[159.01,  351.38, "Ethanol"],
+			[175.6,   337.8,  "Methanol"],
+			[182.60,  371.53, "Heptane"],
+			[216.0,   398.2,  "Octane"],
+			[260.2,   470.4,  "Ethylene glycol"],
+			[273.15,  373.15, "Water"],
+			[278.68,  353.2,  "Benzene"],
+			[307.2,   '',     "Cocoa butter"],
+			[310,     643,    "Paraffin wax"],
+			[461,     '',     "Solder (60/40 Sn-Pb)"],
 		],
 	],
 
@@ -137,16 +178,16 @@ var degreesData = {
 				str1 += `<p data-degrees="${d[0]}">`;
 
 				if (i===0) {
-					str1 += `<b>${d[0]}°</b> ${d[1]}`;
-				} else if (i===1) {
-					str1 += `<b>${d[0]}°</b> is the internal angle between the sides of a regular ${d[1]}`;
-				} else if (i===2) {
-					str1 += `<b>${d[0]}°</b> is the angle between the faces (the 'dihedral angle') of regular ${d[1]}`;
-				} else if (i===3) {
 					str1 += `<b>${d[0]}°</b> is <sup>${d[1]}</sup>&frasl;<sub>${d[2]}</sub> of a revolution`;
-				} else if (i===4) {
+				} else if (i===1) {
 					str1 += `A compass bearing of <b>${d[0]}°</b> (${degreesData.convertToDegreesAndMinutes(d[0])}) is
 						${d[1]} of the 32 points of the compass ${(d[2] ? d[2] : '')}`;
+				} else if (i===2) {
+					str1 += `<b>${d[0]}°</b> ${d[1]}`;
+				} else if (i===3) {
+					str1 += `<b>${d[0]}°</b> is the internal angle between the sides of a regular ${d[1]}`;
+				} else if (i===4) {
+					str1 += `<b>${d[0]}°</b> is the angle between the faces (the 'dihedral angle') of regular ${d[1]}`;
 				}
 				str1 += '</p>';
 			}
@@ -161,11 +202,14 @@ var degreesData = {
 					str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> ${d[1]}</p>`;
 					str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> ${d[1]}</p>`;
 				} else if (i===1) {
-					str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> is the melting point of ${d[1]} at standard atmospheric pressure</p>`;
-					str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> is the melting point of ${d[1]} at standard atmospheric pressure</p>`;
-				} else if (i===2) {
-					str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> is the boiling point of ${d[1]} at standard atmospheric pressure</p>`;
-					str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> is the boiling point of ${d[1]} at standard atmospheric pressure</p>`;
+					if (d[0] !== '') {
+						str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> is the melting point of ${d[2]} at standard atmospheric pressure</p>`;
+						str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> is the melting point of ${d[2]} at standard atmospheric pressure</p>`;
+					}
+					if (d[1] !== '') {
+						str1 += `<p data-degrees="${degreesData.convertKtoC(d[1])}"><b>${degreesData.convertKtoC(d[1])} °C</b> is the boiling point of ${d[2]} at standard atmospheric pressure</p>`;
+						str1 += `<p data-degrees="${degreesData.convertKtoF(d[1])}"><b>${degreesData.convertKtoF(d[1])} °F</b> is the boiling point of ${d[2]} at standard atmospheric pressure</p>`;
+					}
 				}
 			}
 		}
@@ -174,4 +218,4 @@ var degreesData = {
 	}
 };
 
-window.addEventListener('load', degreesData.writeToPage);
+window.addEventListener('DOMContentLoaded', degreesData.writeToPage);
