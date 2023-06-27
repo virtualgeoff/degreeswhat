@@ -24,6 +24,7 @@ const Angulator = (function() {
 		radius = 130,
 		angleRadians = 0,
 		angleDegrees = 0,
+		tau = 2 * Math.PI,
 		displayType, // 'compass' | 'protractor'
 		compass, compassCard, angleIndicator, degreeMarks, degreeNumbers;
 
@@ -112,12 +113,13 @@ const Angulator = (function() {
 		// temp conversions
 		let D    = angleDegrees.toFixed(1),
 			d    = Number(D),
-			r    = angleRadians.toFixed(2),
-			t    = (d/360).toFixed(2),
-			g    = (d * 10/9).toFixed(1),
-			CtoF = (d * 9/5 + 32).toFixed(1),
-			CtoK = (d + 273.15).toFixed(2),
-			CtoR = (d * 9/5 + 491.67).toFixed(2),
+			R    = angleRadians.toFixed(2),
+			T    = (d/360).toFixed(2),
+			G    = (d * 10/9).toFixed(1),
+			C    = ((d >= -273.15) ? D : '—'),
+			CtoF = ((d >= -273.15) ? (d * 9/5 + 32).toFixed(1) : '—'),
+			CtoK = ((d >= -273.15) ? (d + 273.15).toFixed(2) : '—'),
+			CtoR = ((d >= -273.15) ? (d * 9/5 + 491.67).toFixed(2) : '—'),
 			FtoC = ((d-32) * 5/9).toFixed(1),
 			FtoK = ((d + 459.67) * 5/9).toFixed(2),
 			FtoR = (d + 459.67).toFixed(2);
@@ -132,25 +134,25 @@ const Angulator = (function() {
 
 		// big text
 		$('#textAngle').textContent = `${D}°`;
-		$('#textC').textContent     = `${D} °C = `;
+		$('#textC').textContent     = `${C} °C = `;
 		$('#textCtoF').textContent  = `${CtoF} °F`;
 		$('#testF').textContent     = `${D} °F = `;
 		$('#testFtoC').textContent  = `${FtoC} °C`;
 
 		// info1
 		$('#info1 dl').innerHTML = `
-			<dt>${d} ° = </dt>
-			<dd>${r} rad<br>
-				${g} gon<br>
-				${t} turns</dd>
-			<dt>${D} °C = </dt>
+			<dt>${D}° = </dt>
+			<dd>${R} rad<br>
+				${G} gon<br>
+				${T} turns</dd>
+			<dt>${C} °C = </dt>
 			<dd>${CtoF} °F<br>
 				${CtoK} K<br>
-				${CtoR} °R</dd>
+				${CtoR} °Ra</dd>
 			<dt>${D} °F = </dt>
 			<dd>${FtoC} °C<br>
 				${FtoK} K<br>
-				${FtoR} °R</dd>`;
+				${FtoR} °Ra</dd>`;
 
 		// info2
 		// for each p in #info2, show if dataset.degrees is within 1.5° of the current angle
@@ -166,13 +168,19 @@ const Angulator = (function() {
 		// between the positive x-axis and the point (x, y)
 		if (mouse) {
 			angleRadians = -1 * Math.atan2((mouse.y-center.y), (mouse.x-center.x));
-			angleDegrees = angleRadians * 360/(2 * Math.PI);
+			if (displayType === 'compass') { angleRadians -= tau/4; }
+			angleDegrees = angleRadians/tau * 360;
+		} else if (location.search) {
+			angleDegrees = Number(location.search.substring(1)) || 0;
+			if (angleDegrees > 5000) { angleDegrees = 5000; }
+			if (angleDegrees < -459) { angleDegrees = -459; }
+			angleRadians = angleDegrees/360 * tau;
 		}
 
-		//  adjust angle for display type
+		//  adjust angle range
 		if (displayType === 'compass') {
-			angleDegrees = (angleDegrees + 360 - 90) % 360; // 0 <= angle < 360;
-			angleRadians = angleDegrees/360 * 2 * Math.PI;
+			angleDegrees = (angleDegrees + 360) % 360; // 0 <= angle < 360;
+			angleRadians = (angleRadians + tau) % tau; // 0 <= angle < tau
 		}
 
 		//  rotate compass card or indicator line
