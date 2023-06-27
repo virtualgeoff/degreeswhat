@@ -43,6 +43,7 @@ form {margin:1em 0;}
 #info1 dl {max-width:10em; margin:1em 0;}
 #info1 dt {margin-top:1em; text-align:left; font-weight:bold;}
 #info1 dd {margin-left:0;  text-align:right;}
+#color span {display:inline-block; min-width:3em;}
 
 p[data-degrees] {display:none;}
 
