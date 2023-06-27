@@ -53,6 +53,7 @@ section.overlay {display:none; position:fixed; left:0; top:0; width:100vw; max-w
 #info1 dl {max-width:10em; margin:1em 0;}
 #info1 dt {margin-top:1em; text-align:left; font-weight:bold;}
 #info1 dd {margin-left:0;  text-align:right;}
+#info2 {display:none;}
 #color span {display:inline-block; min-width:3em;}
 
 /* sections */

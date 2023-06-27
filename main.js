@@ -265,6 +265,9 @@ const Angulator = (function() {
 
 		// decode email URL
 		$All('a[data-address]').forEach( (a) => { decodeURL(a); });
+
+		// show info2 after load
+		$('#info2').style.display = 'block';
 	}
 
 	return {
