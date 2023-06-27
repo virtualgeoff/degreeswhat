@@ -153,10 +153,10 @@ const Angulator = (function() {
 				${FtoR} °R</dd>`;
 
 		// info2
-		// for each p in #info2, show if dataset.degrees is within 1.1° of the current angle
+		// for each p in #info2, show if dataset.degrees is within 1.5° of the current angle
 		$All('#info2 p[data-degrees]').forEach(p => {
 			let dd = d - p.dataset.degrees;
-			p.style.display = ((dd >= -1.1) && (dd <= 1.1)) ? 'block' : 'none';
+			p.style.display = ((dd >= -1.5) && (dd <= 1.5)) ? 'block' : 'none';
 		});
 	}
 
@@ -216,7 +216,7 @@ const Angulator = (function() {
 		degreeMarks    = $('#degreeMarks');
 		degreeNumbers  = $('#degreeNumbers');
 
-		drawCompass();
+		drawProtractor();
 		getSize();
 
 		//compass.addEventListener("mousemove", mouseMove);
