@@ -21,12 +21,11 @@ const DegreesWhat = (function() {
 	'use strict';
 
 	let center,
-		mouse,
 		radius = 130,
 		angleRadians = 0,
 		angleDegrees = 0,
 		tau = 2 * Math.PI,
-		displayType, // 'compass' | 'protractor'
+		displayType = 'protractor', // 'compass' | 'protractor'
 		compass, compassCard, angleIndicator, degreeMarks, degreeNumbers;
 
 	function drawCompass() {
@@ -37,10 +36,6 @@ const DegreesWhat = (function() {
 			str2 = '';
 
 		let points = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
-
-		// set display type and default angle (if no mouse position yet)
-		displayType = 'compass';
-		angleDegrees = 90;
 
 		// marks
 		for (let i=0; i<360; i++) {
@@ -81,10 +76,6 @@ const DegreesWhat = (function() {
 			length, angle, angle2, yPos,
 			str1 = '',
 			str2 = '';
-
-		// set display type and default angle (if no mouse position yet)
-		displayType = 'protractor';
-		angleDegrees = 0;
 
 		// marks
 		for (let i=0; i<360; i++) {
@@ -168,25 +159,17 @@ const DegreesWhat = (function() {
 	}
 
 	function updateAngle() {
-		// calculate angle
-		// note atan2(y, x) gives the counterclockwise angle, in radians,
-		// between the positive x-axis and the point (x, y)
-		if (mouse) {
-			angleRadians = -1 * Math.atan2((mouse.y-center.y), (mouse.x-center.x));
-			if (displayType === 'compass') { angleRadians -= tau/4; }
-			angleDegrees = angleRadians/tau * 360;
-		} else if (location.search) {
-			angleDegrees = Number(location.search.substring(1)) || 0;
-			if (angleDegrees > 5000) { angleDegrees = 5000; }
-			if (angleDegrees < -459) { angleDegrees = -459; }
-			angleRadians = angleDegrees/360 * tau;
-		}
+
+		// limit range
+		if (angleDegrees > 5000) { angleDegrees = 5000; }
+		if (angleDegrees < -459) { angleDegrees = -459; }
 
 		//  adjust angle range
 		if (displayType === 'compass') {
 			angleDegrees = (angleDegrees + 360) % 360; // 0 <= angle < 360;
-			angleRadians = (angleRadians + tau) % tau; // 0 <= angle < tau
 		}
+
+		angleRadians = angleDegrees/360 * tau;
 
 		//  rotate compass card or indicator line
 		if (displayType === 'compass') {
@@ -202,6 +185,7 @@ const DegreesWhat = (function() {
 	}
 
 	function setType(value) {
+		displayType = value;
 		if (value === 'compass') {
 			drawCompass();
 		} else {
@@ -212,14 +196,18 @@ const DegreesWhat = (function() {
 
 	function mouseMove(e) {
 		//console.log(e);
-		mouse = {x:e.offsetX, y:e.offsetY};
+		// calculate angle
+		// note atan2(y, x) gives the counterclockwise angle, in radians,
+		// between the positive x-axis and the point (x, y)
+		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
+		if (displayType === 'compass') { angleRadians -= tau/4; }
+		angleDegrees = angleRadians/tau * 360;
 		updateAngle();
 	}
 
 	function getSize(e) {
 		//console.log(e);
 		center = {x:compass.clientWidth/2, y:compass.clientHeight/2};
-		updateAngle();
 	}
 
 	function decodeURL(anchor) {
@@ -242,6 +230,13 @@ const DegreesWhat = (function() {
 
 		drawProtractor();
 		getSize();
+
+		// get query string, update angle
+		if (location.search) {
+			angleDegrees = Number(location.search.substring(1)) || 0;
+			angleRadians = angleDegrees/360 * tau;
+		}
+		updateAngle();
 
 		//compass.addEventListener("mousemove", mouseMove);
 		compassCard.addEventListener("mousemove", mouseMove);
