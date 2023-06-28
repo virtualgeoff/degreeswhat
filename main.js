@@ -7,6 +7,7 @@
 	It also shows some interesting facts about angles and temperatures.
 
 	Geoff Pack, June 2023
+	https://degreeswhat.com
 	https://github.com/virtualgeoff/degreeswhat
 */
 
@@ -16,7 +17,7 @@
 const $ = document.querySelector.bind(document);
 const $All = document.querySelectorAll.bind(document);
 
-const Angulator = (function() {
+const DegreesWhat = (function() {
 	'use strict';
 
 	let center,
@@ -257,7 +258,6 @@ const Angulator = (function() {
 		});
 		$All('a.close').forEach(link => {
 			link.addEventListener('click', function(e){
-				//history.back();
 				link.parentNode.parentNode.style.display = 'none';
 				e.preventDefault();
 			});
@@ -277,5 +277,5 @@ const Angulator = (function() {
 	};
 })();
 
-window.addEventListener('load', Angulator.init);
-window.addEventListener('resize', Angulator.getSize);
+window.addEventListener('load', DegreesWhat.init);
+window.addEventListener('resize', DegreesWhat.getSize);
