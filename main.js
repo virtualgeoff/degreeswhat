@@ -194,7 +194,7 @@ const DegreesWhat = (function() {
 		updateAngle();
 	}
 
-	function mouseMove(e) {
+	function getPointer(e) {
 		//console.log(e);
 		// calculate angle
 		// note atan2(y, x) gives the counterclockwise angle, in radians,
@@ -238,8 +238,10 @@ const DegreesWhat = (function() {
 		}
 		updateAngle();
 
+		// mouse & touch
 		//compass.addEventListener("mousemove", mouseMove);
-		compassCard.addEventListener("mousemove", mouseMove);
+		compassCard.addEventListener("pointermove", getPointer);
+
 
 		// make overlays
 		$All('section').forEach(item => { item.classList.add('overlay'); }); // visible if JS disabled
