@@ -1,5 +1,4 @@
 # Degrees What?
 
-Degrees What? is a light-hearted tool for converting temperatures in °C to °F and vice
-versa. The difference with other conversion tools is that it uses angular degrees to
-input the temperature.
+Degrees What? is a tool for converting temperatures between Celsius (°C), Fahrenheit (°F),
+Kelvin (K) and other scales. It also shows some interesting facts about angles and temperatures.
