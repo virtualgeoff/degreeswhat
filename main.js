@@ -1,17 +1,11 @@
 /*
 	Degrees What?
-
-	Degrees What? is a light-hearted tool for converting temperatures between Celsius (°C)
-	Fahrenheit (°F), Kelvin (K) and other scales.
-
-	It also shows some interesting facts about angles and temperatures.
-
 	Geoff Pack, June 2023
-	https://degreeswhat.com
 	https://github.com/virtualgeoff/degreeswhat
 */
 
 /* jshint esversion: 6 */
+/* globals degreesData */
 
 // shortcuts
 const $ = document.querySelector.bind(document);
@@ -26,16 +20,14 @@ const DegreesWhat = (function() {
 		angleDegrees = 0,
 		tau = 2 * Math.PI,
 		displayType = 'protractor', // 'compass' | 'protractor'
-		compass, compassCard, angleIndicator, degreeMarks, degreeNumbers, compassOverlay;
+		compass, compassCard, angleIndicator, compassOverlay;
 
 	function drawCompass() {
-		let h = parseFloat(degreeNumbers.getAttribute('font-size')),
+		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
 			textOffset = 4,
 			angle, scale,
 			str1 = '',
 			str2 = '';
-
-		let points = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 
 		// marks
 		for (let i=0; i<360; i++) {
@@ -44,7 +36,7 @@ const DegreesWhat = (function() {
 			if ((i % 15) === 0) { length = 15; }
 			str1 += `<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`;
 		}
-		degreeMarks.innerHTML = str1;
+		$('#degreeMarks').innerHTML = str1;
 
 		// numbers
 		for (let i=0; i<360; i+=15) {
@@ -54,7 +46,9 @@ const DegreesWhat = (function() {
 					<text x="0" y="0" transform="rotate(180)">${i}</text>
 				</g>`;
 		}
+
 		// points of the compass
+		let points = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 		for (let i=0; i<16; i++) {
 			angle = (i * 360/16 + 180);
 			scale = 1.3;
@@ -67,7 +61,7 @@ const DegreesWhat = (function() {
 					<text x="0" y="0" transform="rotate(180)" font-size="5px">${points[i]}</text>
 				</g>`;
 		}
-		degreeNumbers.innerHTML = str2;
+		$('#degreeNumbers').innerHTML = str2;
 
 		// adjust text position
 		$('#text1').setAttribute('transform', 'translate(0,-22)');
@@ -79,7 +73,7 @@ const DegreesWhat = (function() {
 	}
 
 	function drawProtractor() {
-		let h = parseFloat(degreeNumbers.getAttribute('font-size')),
+		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
 			textOffset = 4,
 			length, angle, angle2, yPos,
 			str1 = '',
@@ -93,7 +87,7 @@ const DegreesWhat = (function() {
 			if ((i % 90) === 0) { length = radius; }
 			str1 += `<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`;
 		}
-		degreeMarks.innerHTML = str1;
+		$('#degreeMarks').innerHTML = str1;
 
 		// numbers
 		for (let i=-170; i<=180; i+=10) {
@@ -106,7 +100,7 @@ const DegreesWhat = (function() {
 					<text x="0" y="${yPos}" transform="rotate(${angle2})">${i}</text>
 				</g>`;
 		}
-		degreeNumbers.innerHTML = str2;
+		$('#degreeNumbers').innerHTML = str2;
 
 		// adjust text position
 		$('#text1').setAttribute('transform', 'translate(0,-45)');
@@ -158,14 +152,9 @@ const DegreesWhat = (function() {
 		if (degreesData) {
 			degreesData.showInfo(d);
 		}
-
-		// color
-		//document.body.style.background = `hsl(${d}deg, 50%, 50%)`;
-		//$('#color').innerHTML = `HSL(<b>${d}°</b>, 50%, 50%) is the color: <span style="background:hsl(${d}deg, 50%, 50%)">&nbsp;</span>`;
 	}
 
 	function updateAngle() {
-
 		// limit range
 		if (angleDegrees > 5000) { angleDegrees = 5000; }
 		if (angleDegrees < -459) { angleDegrees = -459; }
@@ -204,8 +193,7 @@ const DegreesWhat = (function() {
 		e.preventDefault();
 		//console.log(e);
 		// calculate angle
-		// note atan2(y, x) gives the counterclockwise angle, in radians,
-		// between the positive x-axis and the point (x, y)
+		// note atan2(y,x) gives the counterclockwise angle, in radians between the +ve x-axis and the point (x,y)
 		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
 		if (displayType === 'compass') { angleRadians -= tau/4; }
 		angleDegrees = angleRadians/tau * 360;
@@ -232,8 +220,6 @@ const DegreesWhat = (function() {
 		compass        = $('#compass');
 		compassCard    = $('#compassCard');
 		angleIndicator = $('#angleIndicator');
-		degreeMarks    = $('#degreeMarks');
-		degreeNumbers  = $('#degreeNumbers');
 		compassOverlay = $('#compassOverlay');
 
 		drawProtractor();
@@ -247,9 +233,7 @@ const DegreesWhat = (function() {
 		updateAngle();
 
 		// mouse & touch
-		//compass.addEventListener("mousemove", mouseMove);
 		compassOverlay.addEventListener("pointermove", getPointer);
-
 
 		// make overlays
 		$All('section').forEach(item => { item.classList.add('overlay'); }); // visible if JS disabled

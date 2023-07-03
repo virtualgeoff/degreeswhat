@@ -231,6 +231,10 @@ var degreesData = {
 			let dd = d - p.dataset.degrees;
 			p.style.display = ((dd >= -1.5) && (dd <= 1.5)) ? 'block' : 'none';
 		});
+
+		// color
+		//document.body.style.background = `hsl(${d}deg, 100%, 50%)`;
+		//$('#color').innerHTML = `HSL(<b>${d}°</b>, 100%, 50%) is the color: <span style="background:hsl(${d}deg, 100%, 50%)">&nbsp;</span>`;
 	}
 };
 
