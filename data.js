@@ -215,6 +215,22 @@ var degreesData = {
 		}
 
 		$('#info2').innerHTML += str1;
+
+		// show info if query string present
+		if (location.search) {
+			let d = Number(location.search.substring(1)) || 0;
+			degreesData.showInfo(d);
+		} else {
+			degreesData.showInfo(0);
+		}
+	},
+
+	showInfo: function(d) {
+		// for each p in #info2, show if dataset.degrees is within 1.5° of the current angle
+		$All('#info2 p[data-degrees]').forEach(p => {
+			let dd = d - p.dataset.degrees;
+			p.style.display = ((dd >= -1.5) && (dd <= 1.5)) ? 'block' : 'none';
+		});
 	}
 };
 

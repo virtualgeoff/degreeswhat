@@ -155,11 +155,9 @@ const DegreesWhat = (function() {
 				${FtoR} °Ra</dd>`;
 
 		// info2
-		// for each p in #info2, show if dataset.degrees is within 1.5° of the current angle
-		$All('#info2 p[data-degrees]').forEach(p => {
-			let dd = d - p.dataset.degrees;
-			p.style.display = ((dd >= -1.5) && (dd <= 1.5)) ? 'block' : 'none';
-		});
+		if (degreesData) {
+			degreesData.showInfo(d);
+		}
 
 		// color
 		//document.body.style.background = `hsl(${d}deg, 50%, 50%)`;
