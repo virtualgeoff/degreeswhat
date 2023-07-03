@@ -55,7 +55,10 @@ section.overlay {display:none; position:fixed; left:0; top:0; width:100vw; max-w
 #info1 dl {max-width:10em; margin:1em 0;}
 #info1 dt {margin-top:1em; text-align:left; font-weight:bold;}
 #info1 dd {margin-left:0;  text-align:right;}
-#info2 {display:none;}
+#info2 {}
+#info2 p[data-degrees] {display:none;}
+#info2 p[data-degrees="0.0"] {display:block}
+
 #color span {display:inline-block; min-width:3em;}
 
 /* sections */
@@ -66,9 +69,6 @@ section > div {position:relative; margin:0; padding:1em;}
 #support {width:210px; margin:0 auto;}
 #support a {color:#000;}
 #support a:hover {color:#f00;}
-
-/* settings */
-#settings {display:none;}
 
 
 @media (orientation:portrait) {

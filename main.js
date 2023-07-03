@@ -250,7 +250,6 @@ const DegreesWhat = (function() {
 
 		// mouse & touch
 		//compass.addEventListener("mousemove", mouseMove);
-		//compassCard.addEventListener("pointermove", getPointer);
 		compassOverlay.addEventListener("pointermove", getPointer);
 
 
@@ -273,9 +272,6 @@ const DegreesWhat = (function() {
 
 		// decode email URL
 		$All('a[data-address]').forEach( (a) => { decodeURL(a); });
-
-		// show info2 after load
-		$('#info2').style.display = 'block';
 	}
 
 	return {
@@ -285,5 +281,5 @@ const DegreesWhat = (function() {
 	};
 })();
 
-window.addEventListener('load', DegreesWhat.init);
+window.addEventListener('DOMContentLoaded', DegreesWhat.init);
 window.addEventListener('resize', DegreesWhat.getSize);

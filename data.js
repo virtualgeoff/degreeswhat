@@ -218,4 +218,4 @@ var degreesData = {
 	}
 };
 
-window.addEventListener('DOMContentLoaded', degreesData.writeToPage);
+window.addEventListener('load', degreesData.writeToPage);
