@@ -45,6 +45,8 @@ nav svg {width:1.625em; height:1.625em;}
 section  {display:block; width:100vmin; width:100dvmin; max-width:40em; margin:0 auto; padding:0;} /* default for no-js */
 section.overlay {display:none; position:fixed; left:0; top:0; width:100vw; max-width:100vw; height:100vh; height:100dvh; margin:0; background:rgba(255,255,255,0.90); backdrop-filter:blur(3px); -webkit-backdrop-filter: blur(3px); overflow:scroll; overscroll-behavior:contain;} /* .overlay class added via js */
 
+#compass, #compassOverlay {touch-action:none;}
+
 
 /* info */
 .info {}
