@@ -26,7 +26,7 @@ const DegreesWhat = (function() {
 		angleDegrees = 0,
 		tau = 2 * Math.PI,
 		displayType = 'protractor', // 'compass' | 'protractor'
-		compass, compassCard, angleIndicator, degreeMarks, degreeNumbers;
+		compass, compassCard, angleIndicator, degreeMarks, degreeNumbers, compassOverlay;
 
 	function drawCompass() {
 		let h = parseFloat(degreeNumbers.getAttribute('font-size')),
@@ -227,6 +227,7 @@ const DegreesWhat = (function() {
 		angleIndicator = $('#angleIndicator');
 		degreeMarks    = $('#degreeMarks');
 		degreeNumbers  = $('#degreeNumbers');
+		compassOverlay = $('#compassOverlay');
 
 		drawProtractor();
 		getSize();
@@ -240,7 +241,8 @@ const DegreesWhat = (function() {
 
 		// mouse & touch
 		//compass.addEventListener("mousemove", mouseMove);
-		compassCard.addEventListener("pointermove", getPointer);
+		//compassCard.addEventListener("pointermove", getPointer);
+		compassOverlay.addEventListener("pointermove", getPointer);
 
 
 		// make overlays
