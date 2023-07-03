@@ -195,6 +195,7 @@ const DegreesWhat = (function() {
 	}
 
 	function getPointer(e) {
+		e.preventDefault();
 		//console.log(e);
 		// calculate angle
 		// note atan2(y, x) gives the counterclockwise angle, in radians,
