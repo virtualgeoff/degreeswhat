@@ -68,6 +68,14 @@ const DegreesWhat = (function() {
 				</g>`;
 		}
 		degreeNumbers.innerHTML = str2;
+
+		// adjust text position
+		$('#text1').setAttribute('transform', 'translate(0,-22)');
+		$('#text2').setAttribute('transform', 'translate(0, 22)');
+
+		// modify indicator
+		$('#angleIndicator path').setAttribute('d', 'M 135,0 L 60,0');
+		$('#angleIndicator circle').setAttribute('r', '0');
 	}
 
 	function drawProtractor() {
@@ -99,6 +107,14 @@ const DegreesWhat = (function() {
 				</g>`;
 		}
 		degreeNumbers.innerHTML = str2;
+
+		// adjust text position
+		$('#text1').setAttribute('transform', 'translate(0,-45)');
+		$('#text2').setAttribute('transform', 'translate(0, 45)');
+
+		// modify indicator
+		$('#angleIndicator path').setAttribute('d', 'M 0,0 L 135,0');
+		$('#angleIndicator circle').setAttribute('r', '2');
 	}
 
 	function updateInfo() {
@@ -115,14 +131,6 @@ const DegreesWhat = (function() {
 			FtoC = ((d-32) * 5/9).toFixed(1),
 			FtoK = ((d + 459.67) * 5/9).toFixed(2),
 			FtoR = (d + 459.67).toFixed(2);
-
-		if (displayType === 'compass') {
-			$('#text1').setAttribute('transform', 'translate(0,-26)');
-			$('#text2').setAttribute('transform', 'translate(0, 26)');
-		} else {
-			$('#text1').setAttribute('transform', 'translate(0,-44)');
-			$('#text2').setAttribute('transform', 'translate(0, 44)');
-		}
 
 		// big text
 		$('#textAngle').textContent = `${D}°`;
