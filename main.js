@@ -132,8 +132,8 @@ const DegreesWhat = (function() {
 		$('#textAngle').textContent = `${D}°`;
 		$('#textC').textContent     = `${C} °C = `;
 		$('#textCtoF').textContent  = `${CtoF} °F`;
-		$('#testF').textContent     = `${D} °F = `;
-		$('#testFtoC').textContent  = `${FtoC} °C`;
+		$('#textF').textContent     = `${D} °F = `;
+		$('#textFtoC').textContent  = `${FtoC} °C`;
 
 		// info1
 		$('#info1 dl').innerHTML = `
