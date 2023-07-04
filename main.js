@@ -158,8 +158,8 @@ const DegreesWhat = (function() {
 
 	function updateAngle() {
 		// limit angles
-		if (angleDegrees > 5000) { angleDegrees = 5000; }
-		if (angleDegrees < -459.6) { angleDegrees = -459.6; }
+		if (angleDegrees > 5537.7) { angleDegrees = 5537.7; } //  5537.7 °C = 9999.9 °F
+		if (angleDegrees < -459.6) { angleDegrees = -459.6; } // −459.67 °F = 0.00 °Ra
 
 		//  adjust range
 		if (displayType === 'compass') {
