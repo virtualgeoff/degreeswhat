@@ -65,7 +65,7 @@ var degreesData = {
 			[5.145, "is the inclination of the Moon's orbit to the to the ecliptic plane (the orbital plane of Earth around the Sun)"],
 			[15,    "is the angle the Earth turns in one hour"],
 			[23.44, "is the angle of the tilt of the Earth's axis"],
-			[6,     "is the angle the minute hand of an analogue clock turns in one minute, and the second had turns in one second"],
+			[6,     "is the angle the minute hand of an analogue clock turns in one minute, and the second hand turns in one second"],
 			[30,    "is the angle the hour hand of a (12 hour) analogue clock turns in one hour"],
 			[34,    "is the angle of repose of dry sand"],
 			[38,    "is the angle of repose of snow"],
