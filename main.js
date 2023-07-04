@@ -68,6 +68,7 @@ const DegreesWhat = (function() {
 		$('#text2').setAttribute('transform', 'translate(0, 22)');
 
 		// modify indicator
+		angleIndicator.setAttribute('transform', 'rotate(-90)');
 		$('#angleIndicator path').setAttribute('d', 'M 135,0 L 60,0');
 		$('#angleIndicator circle').setAttribute('r', '0');
 	}
@@ -106,7 +107,8 @@ const DegreesWhat = (function() {
 		$('#text1').setAttribute('transform', 'translate(0,-45)');
 		$('#text2').setAttribute('transform', 'translate(0, 45)');
 
-		// modify indicator
+		// modify compass card and indicator
+		compassCard.setAttribute('transform', 'rotate(0)');
 		$('#angleIndicator path').setAttribute('d', 'M 0,0 L 135,0');
 		$('#angleIndicator circle').setAttribute('r', '2');
 	}
@@ -155,23 +157,20 @@ const DegreesWhat = (function() {
 	}
 
 	function updateAngle() {
-		// limit range
+		// limit angles
 		if (angleDegrees > 5000) { angleDegrees = 5000; }
 		if (angleDegrees < -459) { angleDegrees = -459; }
 
-		//  adjust angle range
+		//  adjust range
 		if (displayType === 'compass') {
 			angleDegrees = (angleDegrees + 360) % 360; // 0 <= angle < 360;
 		}
-
 		angleRadians = angleDegrees/360 * tau;
 
 		//  rotate compass card or indicator line
 		if (displayType === 'compass') {
 			compassCard.setAttribute('transform', `rotate(${-angleDegrees})`);
-			angleIndicator.setAttribute('transform', 'rotate(-90)');
 		} else {
-			compassCard.setAttribute('transform', 'rotate(0)');
 			angleIndicator.setAttribute('transform', `rotate(${-angleDegrees})`);
 		}
 
@@ -195,7 +194,7 @@ const DegreesWhat = (function() {
 		// calculate angle
 		// note atan2(y,x) gives the counterclockwise angle, in radians between the +ve x-axis and the point (x,y)
 		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
-		if (displayType === 'compass') { angleRadians -= tau/4; }
+		if (displayType === 'compass') { angleRadians -= tau/4; } // - 90° CCW
 		angleDegrees = angleRadians/tau * 360;
 		updateAngle();
 	}
