@@ -159,7 +159,7 @@ const DegreesWhat = (function() {
 	function updateAngle() {
 		// limit angles
 		if (angleDegrees > 5000) { angleDegrees = 5000; }
-		if (angleDegrees < -459) { angleDegrees = -459; }
+		if (angleDegrees < -459.6) { angleDegrees = -459.6; }
 
 		//  adjust range
 		if (displayType === 'compass') {
