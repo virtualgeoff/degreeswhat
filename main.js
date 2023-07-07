@@ -178,7 +178,7 @@ const DegreesWhat = (function() {
 		updateInfo();
 	}
 
-	function setType(value) {
+	function setDisplayType(value) {
 		displayType = value;
 		if (value === 'compass') {
 			drawCompass();
@@ -258,7 +258,7 @@ const DegreesWhat = (function() {
 	return {
 		init,
 		getSize,
-		setType
+		setDisplayType
 	};
 })();
 
