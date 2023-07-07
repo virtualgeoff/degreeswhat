@@ -9,24 +9,33 @@ var degreesData = {
 	// interesting angles (in °)
 	angles: [
 		[
-			// turns
-			[30,  1, 12],
-			[45,  1, 8],
-			[60,  1, 6],
-			[90,  1, 4],
-			[120, 1, 3],
-			[135, 3, 8],
-			[150, 5, 12],
-			[180, 1, 2],
-			[210, 7, 12],
-			[225, 5, 8],
-			[240, 2, 3],
-			[270, 3, 4],
-			[300, 5, 6],
-			[315, 7, 8],
-			[330, 11,12],
+			// revolutions and radians
+			[-180, "−1",  2,  "-𝛑", ''], // quotes because using minus sign not hyphen-minus (clearer at small font sizes)
+			[-150, "−5", 12, "−5𝛑",  6],
+			[-135, "−3",  8, "−3𝛑",  4],
+			[-120, "−1",  3, "−2𝛑",  3],
+			[-90,  "−1",  4,  "−𝛑",  2],
+			[-60,  "−1",  6,  "−𝛑",  3],
+			[-45,  "−1",  8,  "−𝛑",  4],
+			[-30,  "−1", 12,  "−𝛑",  6],
+			[30,     1,  12,   "𝛑",  6],
+			[45,     1,   8,   "𝛑",  4],
+			[60,     1,   6,   "𝛑",  3],
+			[90,     1,   4,   "𝛑",  2],
+			[120,    1,   3,  "2𝛑",  3],
+			[135,    3,   8,  "3𝛑",  4],
+			[150,    5,  12,  "5𝛑",  6],
+			[180,    1,   2,   "𝛑", ''],
+			[210,    7,  12,  "7𝛑",  6],
+			[225,    5,   8,  "5𝛑",  4],
+			[240,    2,   3,  "4𝛑",  3],
+			[270,    3,   4,  "3𝛑",  2],
+			[300,    5,   6,  "5𝛑",  3],
+			[315,    7,   8,  "7𝛑",  4],
+			[330,   11,  12, "11𝛑",  6],
+			[360,    1,  '',  "2𝛑", ''],
 		],[
-			// compassPoints
+			// compass points
 			[11.25,  "North by East      (NbE),  the  1st"],
 			[22.50,  "North-Northeast    (NNE),  the  2nd"],
 			[33.75,  "Northeast by North (NEbN), the  3rd"],
@@ -61,22 +70,22 @@ var degreesData = {
 			[360.00, "North              (N),    the last (or zeroth)"],
 		],[
 			// miscellaneous
-			[0.5,   "is the approximate diameter of the Sun and of the Moon as viewed from Earth"],
-			[5.145, "is the inclination of the Moon's orbit to the to the ecliptic plane (the orbital plane of Earth around the Sun)"],
-			[15,    "is the angle the Earth turns in one hour"],
-			[23.44, "is the angle of the tilt of the Earth's axis"],
-			[6,     "is the angle the minute hand of an analogue clock turns in one minute, and the second hand turns in one second"],
-			[30,    "is the angle the hour hand of a (12 hour) analogue clock turns in one hour"],
-			[34,    "is the angle of repose of dry sand"],
-			[38,    "is the angle of repose of snow"],
-			[45,    "is the angle of repose of gravel and wet sand"],
-			[57.296, "(57°17′44.8″) is one radian (180°/𝛑 exactly)"],
-			[360,   " is 1 revolution, or 1 turn"],
-			// polygons
-			[60,     "is the angle between the sides of an equilateral triangle"],
-			[90,     "is a right angle, the angle between the sides of a square"],
+			[0.5,    "is the approximate diameter of the Sun and of the Moon as viewed from Earth"],
+			[0.986,  "is the angle the Earth moves in its orbit around the Sun each day"],
+			[5.145,  "is the inclination of the Moon's orbit to the to the ecliptic plane (the orbital plane of Earth around the Sun)"],
+			[15,     "is the angle the Sun moves in one hour"],
+			[15.041, "is the angle the Earth rotates in one hour"],
+			[23.44,  "is the angle of the tilt of the Earth's axis"],
+			[6,      "is the angle the minute hand of an analogue clock turns in one minute, and the second hand turns in one second"],
+			[30,     "is the angle the hour hand of a (12 hour) analogue clock turns in one hour"],
+			[34,     "is the angle of repose of dry sand"],
+			[38,     "is the angle of repose of snow"],
+			[45,     "is the angle of repose of gravel and wet sand"],
+			[360,    "is 1 revolution, or 1 turn"],
 		],[
-			// polygons2
+			// polygons
+			[60,     "equilateral triangle"],
+			[90,     "square (a right angle)"],
 			[108,    "pentagon"],
 			[120,    "hexagon"],
 			[128.57, "heptagon (128<sup>4</sup>⁄<sub>7</sub>° exactly)"],
@@ -120,7 +129,6 @@ var degreesData = {
 			[544.7,   1837,   "Bismuth"],
 			[594.22,  1040,   "Cadmium"],
 			[600.61,  2022,   "Lead"],
-			/*
 			[923,     1363,   "Magnesium"],
 			[933.47,  2792,   "Aluminium"],
 			[692.68,  1180,   "Zinc"],
@@ -135,7 +143,6 @@ var degreesData = {
 			[2041.4,  4098,   "Platinum"],
 			[3290,    5731,   "Tantalum"],
 			[3695,    5828,   "Tungsten"],
-			*/
 
 			// compounds
 			[90.694,  111.6,  "Methane"],
@@ -155,10 +162,16 @@ var degreesData = {
 		],
 	],
 
-	convertToDegreesAndMinutes: function(d) {
-		let deg = Math.floor(d);
+	convertToDegreesMinutes: function(d) {
+		let deg = (d >= 0) ? Math.floor(d) : Math.ceil(d);
 		let min = ((d % 1) * 60).toFixed(0);
-		return deg + '°' + min + '′';
+		return `${deg}° ${min}′`;
+	},
+	convertToDegreesMinutesSeconds: function(d) {
+		let deg = (d >= 0) ? Math.floor(d) : Math.ceil(d);
+		let m = (Math.abs(d) % 1) * 60;
+		let s = (m % 1) * 60;
+		return `${deg}° ${Math.floor(m)}′ ${s.toFixed(1)}″`;
 	},
 	convertKtoC: function(d) {
 		return (d - 273.15).toFixed(1);
@@ -171,25 +184,45 @@ var degreesData = {
 		let d,
 			str1 = '';
 
+		// radians (integer multiples)
+		for (let i=-3; i<=6; i++) {
+			if (i===0) { continue; }
+			d = (i*180)/Math.PI;
+			str1 += `<p data-degrees="${d.toFixed(3)}"><b>${d.toFixed(3)}°</b> (${degreesData.convertToDegreesMinutesSeconds(d)}) is ${i}&nbsp;radian${((i==1)?'':'s')}</p>`;
+		}
+
 		// angles
 		for (let i=0; i<degreesData.angles.length; i++) {
 			for (let j=0; j<degreesData.angles[i].length; j++) {
 				d = degreesData.angles[i][j];
-				str1 += `<p data-degrees="${d[0]}">`;
 
 				if (i===0) {
-					str1 += `<b>${d[0]}°</b> is <sup>${d[1]}</sup>&frasl;<sub>${d[2]}</sub> of a revolution`;
+					// revolutions
+					if (d[2]) {
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is <sup>${d[1]}</sup>&frasl;<sub>${d[2]}</sub> of a revolution</p>`;
+					} else {
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is ${d[1]} revolution, or turn</p>`;
+					}
+					// radians
+					if (d[4]) {
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is <sup>${d[3]}</sup>&frasl;<sub>${d[4]}</sub> radians</p>`;
+					} else {
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is ${d[3]} radians</p>`;
+					}
 				} else if (i===1) {
-					str1 += `A compass bearing of <b>${d[0]}°</b> (${degreesData.convertToDegreesAndMinutes(d[0])}) is
-						${d[1]} of the 32 points of the compass ${(d[2] ? d[2] : '')}`;
+					// compass points
+					str1 += `<p data-degrees="${d[0]}">A compass bearing of <b>${d[0]}°</b> (${degreesData.convertToDegreesMinutes(d[0])}) is
+						${d[1]} of the 32 points of the compass ${(d[2] ? d[2] : '')}</p>`;
 				} else if (i===2) {
-					str1 += `<b>${d[0]}°</b> ${d[1]}`;
+					// miscellaneous
+					str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> ${d[1]}</p>`;
 				} else if (i===3) {
-					str1 += `<b>${d[0]}°</b> is the internal angle between the sides of a regular ${d[1]}`;
+					// polygons
+					str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is the ${(j===1)?'':'internal'} angle between the sides of ${(j===0)?'an':'a'} ${(j>=2)?'regular':''} ${d[1]}</p>`;
 				} else if (i===4) {
-					str1 += `<b>${d[0]}°</b> is the angle between the faces (the 'dihedral angle') of regular ${d[1]}`;
+					// polyhedra
+					str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is the angle between the faces (the 'dihedral angle') of regular ${d[1]}</p>`;
 				}
-				str1 += '</p>';
 			}
 		}
 
@@ -199,14 +232,17 @@ var degreesData = {
 				d = degreesData.temperatures[i][j];
 
 				if (i===0) {
+					// misc temps
 					str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> ${d[1]}</p>`;
 					str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> ${d[1]}</p>`;
 				} else if (i===1) {
 					if (d[0] !== '') {
+						// melting points
 						str1 += `<p data-degrees="${degreesData.convertKtoC(d[0])}"><b>${degreesData.convertKtoC(d[0])} °C</b> is the melting point of ${d[2]} at standard atmospheric pressure</p>`;
 						str1 += `<p data-degrees="${degreesData.convertKtoF(d[0])}"><b>${degreesData.convertKtoF(d[0])} °F</b> is the melting point of ${d[2]} at standard atmospheric pressure</p>`;
 					}
 					if (d[1] !== '') {
+						// boiling points
 						str1 += `<p data-degrees="${degreesData.convertKtoC(d[1])}"><b>${degreesData.convertKtoC(d[1])} °C</b> is the boiling point of ${d[2]} at standard atmospheric pressure</p>`;
 						str1 += `<p data-degrees="${degreesData.convertKtoF(d[1])}"><b>${degreesData.convertKtoF(d[1])} °F</b> is the boiling point of ${d[2]} at standard atmospheric pressure</p>`;
 					}
