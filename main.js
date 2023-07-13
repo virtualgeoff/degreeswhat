@@ -205,6 +205,12 @@ const DegreesWhat = (function() {
 		center = {x:compass.clientWidth/2, y:compass.clientHeight/2};
 	}
 
+	function showSection(e) {
+		// hide all sections, show the one you want
+		$All('section').forEach( item => { item.style.display = 'none'; });
+		if ($(window.location.hash)) { $(window.location.hash).style.display = 'block'; }
+	}
+
 	function decodeURL(anchor) {
 		// decodes data in data-address attribute of an anchor tag — used to obfuscate mailto link
 		let input = anchor.dataset.address.replace(/\s+/g, ',').split(',');
@@ -235,22 +241,10 @@ const DegreesWhat = (function() {
 		// mouse & touch
 		compassOverlay.addEventListener("pointermove", getPointer);
 
-		// make overlays
+		// make overlays, handle section links
 		$All('section').forEach(item => { item.classList.add('overlay'); }); // visible if JS disabled
-
-		// handle navigation links
-		$All('a[href="#about"], a[href="#settings"]').forEach(link => {
-			link.addEventListener('click', function(e){
-				$(link.hash).style.display = 'block';
-				e.preventDefault();
-			});
-		});
-		$All('a.close').forEach(link => {
-			link.addEventListener('click', function(e){
-				link.parentNode.parentNode.style.display = 'none';
-				e.preventDefault();
-			});
-		});
+		if (window.location.hash) { showSection(); }
+		window.addEventListener('hashchange', showSection);
 
 		// decode email URL
 		$All('a[data-address]').forEach( (a) => { decodeURL(a); });
