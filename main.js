@@ -14,11 +14,12 @@ const $All = document.querySelectorAll.bind(document);
 const DegreesWhat = (function() {
 	'use strict';
 
+	const radius = 130;
+	const tau = 2 * Math.PI;
+
 	let center,
-		radius = 130,
 		angleRadians = 0,
 		angleDegrees = 0,
-		tau = 2 * Math.PI,
 		displayType = 'protractor', // 'compass' | 'protractor'
 		compass, compassCard, angleIndicator, compassOverlay;
 

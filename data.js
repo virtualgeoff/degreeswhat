@@ -110,8 +110,7 @@ var degreesData = {
 			[310.15, "is the average normal human body temperature"],
 			[194.69, "is the sublimation point of dry ice (CO₂) at standard atmospheric pressure"],
 			[353.41, "is the sublimation point of Naphthalene at standard atmospheric pressure"],
-		],
-		[
+		],[
 			// melting and boiling points
 			// elements
 			['',      4.22,   "Helium"],
@@ -143,7 +142,6 @@ var degreesData = {
 			[2041.4,  4098,   "Platinum"],
 			[3290,    5731,   "Tantalum"],
 			[3695,    5828,   "Tungsten"],
-
 			// compounds
 			[90.694,  111.6,  "Methane"],
 			[90.4,    184.6,  "Ethane"],
