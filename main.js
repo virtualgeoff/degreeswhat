@@ -20,7 +20,9 @@ const DegreesWhat = (function() {
 	let center,
 		angleRadians = 0,
 		angleDegrees = 0,
-		displayType = 'protractor', // 'compass' | 'protractor'
+		displayType,  // 'compass' | 'protractor'
+		snap,         // true | false
+		colorScheme,  // 'light' | 'dark' | 'auto'
 		compass, compassCard, angleIndicator, compassOverlay;
 
 	function drawCompass() {
@@ -168,6 +170,11 @@ const DegreesWhat = (function() {
 		}
 		angleRadians = angleDegrees/360 * tau;
 
+		// snap to nearest degree?
+		if (snap) {
+			angleDegrees = Math.round(angleDegrees);
+		}
+
 		//  rotate compass card or indicator line
 		if (displayType === 'compass') {
 			compassCard.setAttribute('transform', `rotate(${-angleDegrees})`);
@@ -208,7 +215,7 @@ const DegreesWhat = (function() {
 	function showSection(e) {
 		// hide all sections, show the one you want
 		$All('section').forEach( item => { item.style.display = 'none'; });
-		if ($(window.location.hash)) { $(window.location.hash).style.display = 'block'; }
+		if ((window.location.hash) && $(window.location.hash)) { $(window.location.hash).style.display = 'block'; }
 	}
 
 	function decodeURL(anchor) {
@@ -222,13 +229,76 @@ const DegreesWhat = (function() {
 		anchor.href = output;
 	}
 
+	function setItem(itemName, value) {
+		// save item to browser local storage
+		// TODO: test if localStorage available and warn user?
+		localStorage.setItem(itemName, value);
+	}
+
+	function getItem(itemName) {
+		// get item from browser local storage
+		// TODO: test if localStorage available and warn user?
+		return JSON.parse(localStorage.getItem(itemName));
+	}
+
+	function setOption(checkbox) {
+		// handle options checkboxes and radio buttons
+		switch (checkbox.name) {
+		  case 'snap':
+			snap = checkbox.checked;
+			setItem('snap', JSON.stringify(checkbox.checked));
+			updateAngle();
+			break;
+		  case 'displayType':
+			setDisplayType(checkbox.value);
+			setItem('displayType', JSON.stringify(checkbox.value));
+			break;
+		  case 'colorScheme':
+			colorScheme = checkbox.value;
+			setItem('colorScheme', JSON.stringify(checkbox.value));
+			updatecolorScheme();
+			break;
+		  default:
+			alert('wot?');
+		}
+	}
+
+	function loadOptions() {
+		// load options from localStorage, and set checkboxes, etc. on page load
+		// snap
+		snap = getItem('snap') || false;
+		$('input[name="snap"]').checked = (snap) ? true : false;
+
+		// displayType
+		displayType = getItem('displayType') || 'protractor';
+		setDisplayType(displayType);
+		$('#display_protractor').checked = (displayType === 'protractor') ? true : false;
+		$('#display_compass').checked    = (displayType === 'compass')    ? true : false;
+
+		// colorScheme
+		colorScheme = getItem('colorScheme') || 'auto';
+		updatecolorScheme();
+		$('#scheme_auto').checked  = (colorScheme === 'auto')  ? true : false;
+		$('#scheme_light').checked = (colorScheme === 'light') ? true : false;
+		$('#scheme_dark').checked  = (colorScheme === 'dark')  ? true : false;
+	}
+
+	function updatecolorScheme() {
+		document.documentElement.classList.remove('light', 'dark'); //reset values
+		if (colorScheme === 'light') {
+			document.documentElement.classList.add('light');
+		} else if (colorScheme === 'dark') {
+			document.documentElement.classList.add('dark');
+		}
+	}
+
 	function init() {
 		compass        = $('#compass');
 		compassCard    = $('#compassCard');
 		angleIndicator = $('#angleIndicator');
 		compassOverlay = $('#compassOverlay');
 
-		drawProtractor();
+		loadOptions(); // from localStorage
 		getSize();
 
 		// get query string, update angle
@@ -253,7 +323,7 @@ const DegreesWhat = (function() {
 	return {
 		init,
 		getSize,
-		setDisplayType
+		setOption
 	};
 })();
 

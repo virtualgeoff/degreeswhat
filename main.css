@@ -1,9 +1,9 @@
 /* degreeswhat/main.css */
 
-html, body {color:#000; background:#ddd;}
+html {color:#000; background:#ddd;}
 body {margin:0; padding:0; font-size:1em; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
 
-h1 {display:none; font-size:1.5em; margin:0 0 1em 0; font-weight:normal;}
+h1 {font-size:1.5em; margin:0 0 1em 0; font-weight:normal;}
 h2 {font-size:1.2em; margin:0 0 1em 0;}
 h3 {font-size:1.0em; margin:2em 0 1em 0}
 h4 {font-size:0.9em; margin:2em 0 1em 0}
@@ -84,8 +84,58 @@ section > div {position:relative; margin:0; padding:1em;}
 }
 
 @media (min-width:30rem) {
-	html, html body {background:#ccc;}
-	section.overlay {background:rgba(204,204,204,0.9); overflow:hidden;}
+	section.overlay {background:rgba(221,221,221,0.9); overflow:hidden;}
 	section.overlay > div {width:40em; max-width:80vw; height:auto; max-height:90vh; max-height:90dvh; margin:5vh auto; margin:5dvh auto; background:rgba(255,255,255,0.7); border:1px solid #999; border-radius:7px; box-shadow:0 5px 10px 8px rgba(0, 0, 0, 0.2); overflow:scroll; overscroll-behavior:contain;}
 	#settings.overlay > div {width:20em;}
 }
+
+
+/* --- COLOR SCHEMES --- */
+
+:root.dark {color:#ddd; background:#222;}
+:root.dark a {color:#79f;}
+:root.dark a:visited {color:#a7d;}
+:root.dark nav a:link, :root.dark a.close { color:#ddd;}
+:root.dark nav a:visited, :root.dark a.close:visited {color:#ddd;}
+:root.dark nav a:hover, :root.dark a.close:hover {color:#f00;}
+:root.dark section.overlay {background:rgba(51,51,51,0.90);}
+:root.dark #compassCard > circle, :root.dark #degreeNumbers > g > rect {fill:#111;}
+:root.dark #text1 > rect, :root.dark #text2 > rect {fill:rgba(51,51,51,0.95)}
+
+@media (min-width:30rem) {
+	:root.dark section.overlay {background:rgba(34,34,34,0.90);}
+	:root.dark section.overlay > div {background:rgba(51,51,51,0.7); border:1px solid #4c4c4c;}
+}
+
+@media (prefers-color-scheme: dark) {
+	html {color:#ddd; background:#222;}
+	a {color:#79f;}
+	a:visited {color:#a7d;}
+	nav a:link, a.close {color:#ddd;}
+	nav a:visited, a.close:visited {color:#ddd;}
+	nav a:hover, a.close:hover {color:#f00;}
+	section.overlay {background:rgba(51,51,51,0.90);}
+	#compassCard > circle, #degreeNumbers > g > rect {fill:#111;}
+	#text1 > rect, #text2 > rect {fill:rgba(51,51,51,0.95)}
+
+	@media (min-width:30rem) {
+		section.overlay {background:rgba(34,34,34,0.90);}
+		section.overlay > div {background:rgba(51,51,51,0.7); border:1px solid #4c4c4c;}
+	}
+
+	:root.light {color:#000; background:#ddd;}
+	:root.light a {color:#00e;}
+	:root.light a:visited {color:#a0e;}
+	:root.light nav a:link, :root.light a.close {color:#003;}
+	:root.light nav a:visited, :root.light a.close:visited {color:#003;}
+	:root.light nav a:hover, :root.light a.close:hover {color:#f00;}
+	:root.light section.overlay {background:rgba(51,51,51,0.90);}
+	:root.light #compassCard > circle, :root.light #degreeNumbers > g > rect {fill:#fff;}
+	:root.light #text1 > rect, :root.light #text2 > rect {fill:rgba(238,238,238,0.95)}
+
+	@media (min-width:30rem) {
+		:root.light section.overlay {background:rgba(221,221,221,0.90);}
+		:root.light section.overlay > div {background:rgba(255,255,255,0.7); border:1px solid #999;}
+	}
+}
+
