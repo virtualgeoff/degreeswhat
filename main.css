@@ -3,7 +3,7 @@
 html {color:#000; background:#ddd;}
 body {margin:0; padding:0; font-size:1em; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
 
-h1 {font-size:1.5em; margin:0 0 1em 0; font-weight:normal;}
+h1 {display:none; font-size:1.3em; margin:0 0 1em 0; font-weight:normal; white-space:nowrap;}
 h2 {font-size:1.2em; margin:0 0 1em 0;}
 h3 {font-size:1.0em; margin:2em 0 1em 0}
 h4 {font-size:0.9em; margin:2em 0 1em 0}
@@ -52,8 +52,9 @@ section.overlay {display:none; position:fixed; left:0; top:0; width:100vw; max-w
 .info {}
 .info h3 {margin:1em 0;}
 #info1 {}
-#info1 dl {max-width:10em; margin:1em 0;}
+#info1 dl {max-width:10em; margin:0 0 1em 0;}
 #info1 dt {margin-top:1em; text-align:left; font-weight:bold;}
+#info1 dt:first-child {margin-top:0;}
 #info1 dd {margin-left:0;  text-align:right;}
 #info2 {}
 #info2 p[data-degrees] {display:none;}
@@ -71,9 +72,8 @@ section > div {position:relative; margin:0; padding:1em;}
 
 
 @media (orientation:portrait) {
-	#info1 {margin: 0 auto;}
+	#info1 {display:none;}
 	#info2 {max-width:20em; min-height:10em;}
-	#info1 dl {display:none;}
 }
 
 @media (orientation:landscape) {
@@ -87,6 +87,10 @@ section > div {position:relative; margin:0; padding:1em;}
 	section.overlay {background:rgba(221,221,221,0.9); overflow:hidden;}
 	section.overlay > div {width:40em; max-width:80vw; height:auto; max-height:90vh; max-height:90dvh; margin:5vh auto; margin:5dvh auto; background:rgba(255,255,255,0.7); border:1px solid #999; border-radius:7px; box-shadow:0 5px 10px 8px rgba(0, 0, 0, 0.2); overflow:scroll; overscroll-behavior:contain;}
 	#settings.overlay > div {width:20em;}
+}
+
+@media (min-height:25em) {
+	h1 {display:block;}
 }
 
 
