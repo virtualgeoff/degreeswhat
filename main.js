@@ -20,6 +20,7 @@ const DegreesWhat = (function() {
 	let center,
 		angleRadians = 0,
 		angleDegrees = 0,
+		angleOffset  = 0,
 		displayType,  // 'compass' | 'protractor'
 		snap,         // true | false
 		colorScheme,  // 'light' | 'dark' | 'auto'
@@ -196,14 +197,25 @@ const DegreesWhat = (function() {
 		updateAngle();
 	}
 
-	function getPointer(e) {
+	function getPointerOffset(e) {
+		// get angle where the pointer entered the compass overlay and save as angleOffset
 		e.preventDefault();
-		//console.log(e);
-		// calculate angle
-		// note atan2(y,x) gives the counterclockwise angle, in radians between the +ve x-axis and the point (x,y)
 		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
 		if (displayType === 'compass') { angleRadians -= tau/4; } // - 90° CCW
-		angleDegrees = angleRadians/tau * 360;
+		angleOffset = (angleRadians/tau * 360) - angleDegrees;
+	}
+
+	function getPointerAngle(e) {
+		// get pointer position and calculate angle
+		// note atan2(y,x) gives the counterclockwise angle, in radians, between the +ve x-axis and the point (x,y)
+		e.preventDefault();
+		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
+		if (displayType === 'compass') {
+			angleRadians -= tau/4;  // - 90° CCW
+			angleDegrees = angleRadians/tau * 360 - angleOffset;
+		} else {
+			angleDegrees = angleRadians/tau * 360
+		}
 		updateAngle();
 	}
 
@@ -309,7 +321,8 @@ const DegreesWhat = (function() {
 		updateAngle();
 
 		// mouse & touch
-		compassOverlay.addEventListener("pointermove", getPointer);
+		compassOverlay.addEventListener("pointermove", getPointerAngle);
+		compassOverlay.addEventListener("pointerover", getPointerOffset);
 
 		// make overlays, handle section links
 		$All('section').forEach(item => { item.classList.add('overlay'); }); // visible if JS disabled
