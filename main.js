@@ -214,7 +214,7 @@ const DegreesWhat = (function() {
 			angleRadians -= tau/4;  // - 90° CCW
 			angleDegrees = angleRadians/tau * 360 - angleOffset;
 		} else {
-			angleDegrees = angleRadians/tau * 360
+			angleDegrees = angleRadians/tau * 360;
 		}
 		updateAngle();
 	}
