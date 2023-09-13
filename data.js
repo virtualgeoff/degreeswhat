@@ -81,7 +81,6 @@ var degreesData = {
 			[34,     "is the angle of repose of dry sand"],
 			[38,     "is the angle of repose of snow"],
 			[45,     "is the angle of repose of gravel and wet sand"],
-			[360,    "is 1 revolution, or 1 turn"],
 		],[
 			// polygons
 			[60,     "equilateral triangle"],
