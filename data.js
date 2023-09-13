@@ -187,7 +187,7 @@ var degreesData = {
 		for (let i=-3; i<=6; i++) {
 			if (i===0) { continue; }
 			d = (i*180)/Math.PI;
-			str1 += `<p data-degrees="${d.toFixed(3)}"><b>${d.toFixed(3)}°</b> (${degreesData.convertToDegreesMinutesSeconds(d)}) is ${i}&nbsp;radian${((i==1)?'':'s')}</p>`;
+			str1 += `<p data-degrees="${d.toFixed(3)}"><b>${d.toFixed(3)}°</b> (${degreesData.convertToDegreesMinutesSeconds(d)}) is ${i}&nbsp;radian${(((i==1)||(i==-1))?'':'s')}</p>`;
 		}
 
 		// angles
