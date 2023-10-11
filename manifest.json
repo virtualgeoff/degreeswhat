@@ -1,0 +1,52 @@
+{
+	"name": "Degrees What?",
+	"short_name": "°?",
+	"description": "Degrees What? is a tool for converting temperatures between Celsius (°C), Fahrenheit (°F), Kelvin (K) and other scales. It also shows some interesting facts about angles and temperatures.",
+	"start_url": "./",
+	"theme_color": "#000",
+	"background_color": "#ddd",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "icons/icon_32.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon_64.png",
+			"sizes": "64x64",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon_128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon_192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon_256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon_512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "icons/icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		},
+		{
+			"src": "icons/icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "maskable"
+		}
+	]
+}

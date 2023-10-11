@@ -8,11 +8,12 @@
 	<meta name="author" content="Geoff Pack">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="color-scheme" content="light dark">
-	<!-- link rel="icon" href="" -->
-	<link rel="icon" type="image/svg+xml" href="icon.svg">
-	<link rel="stylesheet" type="text/css" href="./main.css">
-	<script src="./main.js"></script>
-	<script src="./data.js"></script>
+	<meta name="theme-color" content="#000">
+	<link rel="icon" type="image/svg+xml" href="icons/icon_sm.svg">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="manifest" href="manifest.json">
+	<script src="main.js"></script>
+	<script src="data.js"></script>
 </head>
 <body>
 
@@ -139,9 +140,27 @@
 		</div>
 	</section>
 
-	<!-- 100% privacy friendly analytics -->
+	<!-- 100% privacy friendly analytics
 	<script data-mode="hash" async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 	<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+	-->
+
+	<script>
+
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.register("worker.js").then(
+				(registration) => {
+				  console.log("Service worker registration successful:", registration);
+				},
+				(error) => {
+				  console.error(`Service worker registration failed: ${error}`);
+				},
+			);
+		} else {
+			console.error("Service workers are not supported.");
+		}
+
+	</script>
 
 </body>
 </html>
