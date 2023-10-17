@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 /* globals self, caches */
 
-const currentCache = 'v1';
+const currentCache = 'v2';
 const assets = [
 	"/",
 	"/index.html",
@@ -37,7 +37,7 @@ self.addEventListener('activate', event => {
 				if (cacheName !== currentCache) {
 					return caches.delete(cacheName);
 				}
-			})
+			});
 		})
 	);
 });

@@ -352,7 +352,7 @@ if ("serviceWorker" in navigator) {
 		},
 		(error) => {
 			console.error("Service worker registration failed:", error);
-		},
+		}
 	);
 } else {
 	console.error("Service workers are not supported");
