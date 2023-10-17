@@ -198,15 +198,15 @@ var degreesData = {
 				if (i===0) {
 					// revolutions
 					if (d[2]) {
-						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is <sup>${d[1]}</sup>&frasl;<sub>${d[2]}</sub> of a revolution</p>`;
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is <sup>${d[1]}</sup>&frasl;<sub>${d[2]}</sub> of a revolution<br>`;
 					} else {
-						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is ${d[1]} revolution, or turn</p>`;
+						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is ${d[1]} revolution, or turn<br>`;
 					}
 					// radians
 					if (d[4]) {
-						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is <sup>${d[3]}</sup>&frasl;<sub>${d[4]}</sub> radians</p>`;
+						str1 += `or <sup>${d[3]}</sup>&frasl;<sub>${d[4]}</sub> radians</p>`;
 					} else {
-						str1 += `<p data-degrees="${d[0]}"><b>${d[0]}°</b> is ${d[3]} radians</p>`;
+						str1 += `or ${d[3]} radians</p>`;
 					}
 				} else if (i===1) {
 					// compass points
