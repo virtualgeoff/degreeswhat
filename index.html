@@ -144,23 +144,5 @@
 	<script data-mode="hash" async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 	<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
 
-	<script>
-
-		// set up service worker for PWA
-		if ("serviceWorker" in navigator) {
-			navigator.serviceWorker.register("worker.js").then(
-				(registration) => {
-				  console.log("Service worker registration successful:", registration);
-				},
-				(error) => {
-				  console.error(`Service worker registration failed: ${error}`);
-				},
-			);
-		} else {
-			console.error("Service workers are not supported.");
-		}
-
-	</script>
-
 </body>
 </html>

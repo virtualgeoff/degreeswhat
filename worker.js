@@ -1,51 +1,77 @@
-const VERSION = "20231012T0154";
-const CACHE_NAME = `DegreesWhat-${VERSION}`;
+/* jshint esversion: 6 */
+/* globals self, caches */
 
-const APP_RESOURCES = [
-	"./",
-	"index.html",
-	"main.css",
-	"main.js",
-	"data.js"
+const currentCache = 'v1';
+const assets = [
+	"/",
+	"/index.html",
+	"/main.css",
+	"/main.js",
+	"/data.js"
 ];
 
-// Install: cache the static resources
-self.addEventListener("install", (event) => {
-	console.log("Service worker install event", event);
-	event.waitUntil(async () => {
-		const cache = await caches.open(CACHE_NAME);
-		return cache.addAll(APP_RESOURCES);
-	});
+// install event
+self.addEventListener('install', event => {
+	console.log('Service worker install event', event);
+
+	// cache assets
+	event.waitUntil(
+		caches.open(currentCache)
+		.then(cache => {
+			console.log('Caching assets');
+			cache.addAll(assets);
+		})
+	);
+
 });
 
+// activate event
+self.addEventListener('activate', event => {
+	console.log('Service worker activate event', event);
 
-// Activate: delete old caches
-self.addEventListener("activate", (event) => {
-	console.log("Service worker activate event", event);
+	// delete old caches
 	event.waitUntil(
-		(async () => {
-			const names = await caches.keys();
-			await Promise.all(
-				names.map((name) => {
-					if (name !== CACHE_NAME) {
-						return caches.delete(name);
-					}
-				}),
-			);
-			await clients.claim();
-		})(),
+		caches.keys()
+		.then(cacheNames => {
+			cacheNames.forEach(cacheName => {
+				if (cacheName !== currentCache) {
+					return caches.delete(cacheName);
+				}
+			})
+		})
 	);
 });
 
+// fetch event: cache first, then network
+// see: https://developer.mozilla.org/en-US/docs/Web/API/Cache#examples
+self.addEventListener('fetch', (event) => {
+	console.log(`Fetching: ${event.request.url}`);
 
-// Fetch: network first, cache fallback
-self.addEventListener("fetch", event => {
-	//console.log("Service worker fetch event", event);
-	console.log(`URL requested: ${event.request.url}`);
 	event.respondWith(
-		fetch(event.request)
-		.catch(error => {
-			return caches.match(event.request) ;
+		caches.open(currentCache)
+		.then(cache => {
+			return cache
+				.match(event.request)
+				.then(response => {
+					if (response) {
+						console.log(`Getting from cache: ${response.url}`);
+						return response;
+					}
+
+					return fetch(event.request.clone()).then((response) => {
+						if (response.status < 400) {
+							console.log(`Response: ${response.status} ${response.statusText}, Caching: ${response.url}`);
+							cache.put(event.request, response.clone());
+						} else {
+							console.log(`Response: ${response.status} ${response.statusText}, Not caching: ${event.request.url}`);
+						}
+						return response;
+					});
+				})
+				.catch((error) => {
+					console.error("Error fetching:", error);
+					throw error;
+				});
 		})
 	);
 });

@@ -4,7 +4,7 @@
 	"description": "Degrees What? is a tool for converting temperatures between Celsius (°C), Fahrenheit (°F), Kelvin (K) and other scales. It also shows some interesting facts about angles and temperatures.",
 	"start_url": "./",
 	"theme_color": "#000",
-	"background_color": "#ddd",
+	"background_color": "#ccc",
 	"display": "standalone",
 	"icons": [
 		{
