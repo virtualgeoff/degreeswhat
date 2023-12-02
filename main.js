@@ -357,4 +357,3 @@ if ("serviceWorker" in navigator) {
 } else {
 	console.error("Service workers are not supported");
 }
-
