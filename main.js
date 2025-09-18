@@ -242,15 +242,35 @@ const DegreesWhat = (function() {
 	}
 
 	function setItem(itemName, value) {
-		// save item to browser local storage
-		// TODO: test if localStorage available and warn user?
-		localStorage.setItem(itemName, value);
+		// save item to browser local storage with error handling
+		try {
+			// Test if localStorage is available
+			if (typeof Storage === 'undefined') {
+				alert('Settings could not be saved.');
+				return false;
+			}
+			localStorage.setItem(itemName, value);
+			return true;
+		} catch (error) {
+			// Handle quota exceeded, privacy mode, etc.
+			console.warn('Failed to save setting:', itemName, error.message);
+			alert('Settings could not be saved.');
+			return false;
+		}
 	}
 
 	function getItem(itemName) {
-		// get item from browser local storage
-		// TODO: test if localStorage available and warn user?
-		return JSON.parse(localStorage.getItem(itemName));
+		// get item from browser local storage with error handling
+		try {
+			if (typeof Storage === 'undefined') {
+				return null;
+			}
+			const item = localStorage.getItem(itemName);
+			return item ? JSON.parse(item) : null;
+		} catch (error) {
+			console.warn('Failed to load setting:', itemName, error.message);
+			return null;
+		}
 	}
 
 	function setOption(checkbox) {
