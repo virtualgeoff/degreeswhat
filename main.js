@@ -324,6 +324,33 @@ const DegreesWhat = (function() {
 		}
 	}
 
+	function getAngleFromURL() {
+		// parse and validate URL parameter for initial angle
+		try {
+			if (!location.search) return 0;
+			
+			const param = location.search.substring(1);
+			const angle = parseFloat(param);
+			
+			// Validate the number
+			if (isNaN(angle) || !isFinite(angle)) {
+				alert(`Invalid angle parameter: ${param}`);
+				return 0;
+			}
+			
+			// Apply reasonable bounds (temperature limits will be handled separately)
+			const clampedAngle = Math.max(-999, Math.min(9999, angle));
+			if (clampedAngle !== angle) {
+				alert(`Angle parameter out of range: ${angle}° clamped to ${clampedAngle}°`);
+			}
+			
+			return clampedAngle;
+		} catch (error) {
+			alert(`Error parsing URL parameter: ${error.message}`);
+			return 0;
+		}
+	}
+
 	function init() {
 		compass        = $('#compass');
 		compassCard    = $('#compassCard');
