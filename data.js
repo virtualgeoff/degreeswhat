@@ -273,4 +273,8 @@ const degreesData = {
 	}
 };
 
+// TODO: Add data validation function here when updating data next time
+// Example: validateDataIntegrity(degreesData.angles, degreesData.temperatures);
+// Should check: array lengths, data types, value ranges, required fields
+
 window.addEventListener('load', degreesData.writeToPage);
