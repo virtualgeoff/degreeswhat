@@ -28,7 +28,7 @@ const DegreesWhat = (function() {
 
 	function drawCompass() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
-			textOffset = 4,
+			textOffset = 4, // tweak text position
 			angle, scale,
 			str1 = '',
 			str2 = '';
@@ -79,7 +79,7 @@ const DegreesWhat = (function() {
 
 	function drawProtractor() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
-			textOffset = 4,
+			textOffset = 4, // tweak text position
 			length, angle, angle2, yPos,
 			str1 = '',
 			str2 = '';
@@ -118,19 +118,19 @@ const DegreesWhat = (function() {
 	}
 
 	function updateInfo() {
-		// temp conversions
-		let D    = angleDegrees.toFixed(1),
-			d    = Number(D),
-			R    = angleRadians.toFixed(2),
-			T    = (d/360).toFixed(2),
-			G    = (d * 10/9).toFixed(1),
-			C    = ((d >= -273.15) ? D : '—'),
-			CtoF = ((d >= -273.15) ? (d * 9/5 + 32).toFixed(1) : '—'),
-			CtoK = ((d >= -273.15) ? (d + 273.15).toFixed(2) : '—'),
-			CtoR = ((d >= -273.15) ? (d * 9/5 + 491.67).toFixed(2) : '—'),
-			FtoC = ((d-32) * 5/9).toFixed(1),
-			FtoK = ((d + 459.67) * 5/9).toFixed(2),
-			FtoR = (d + 459.67).toFixed(2);
+		// calculate display values for angles and temperature conversions
+		let D    = angleDegrees.toFixed(1),                                    // degrees (formatted)
+			d    = Number(D),                                                  // degrees (numeric)
+			R    = angleRadians.toFixed(2),                                    // radians
+			T    = (d/360).toFixed(2),                                         // turns (revolutions)
+			G    = (d * 10/9).toFixed(1),                                      // gradians (gon)
+			C    = ((d >= -273.15) ? D : '—'),                                 // Celsius (or dash if below absolute zero)
+			CtoF = ((d >= -273.15) ? (d * 9/5 + 32).toFixed(1) : '—'),         // Celsius to Fahrenheit
+			CtoK = ((d >= -273.15) ? (d + 273.15).toFixed(2) : '—'),           // Celsius to Kelvin
+			CtoR = ((d >= -273.15) ? (d * 9/5 + 491.67).toFixed(2) : '—'),     // Celsius to Rankine
+			FtoC = ((d-32) * 5/9).toFixed(1),                                  // Fahrenheit to Celsius
+			FtoK = ((d + 459.67) * 5/9).toFixed(2),                            // Fahrenheit to Kelvin
+			FtoR = (d + 459.67).toFixed(2);                                    // Fahrenheit to Rankine
 
 		// big text
 		$('#textAngle').textContent = `${D}°`;
@@ -161,9 +161,9 @@ const DegreesWhat = (function() {
 	}
 
 	function updateAngle() {
-		// limit angles
-		if (angleDegrees > 5537.7) { angleDegrees = 5537.7; } //  5537.7 °C = 9999.9 °F
-		if (angleDegrees < -459.6) { angleDegrees = -459.6; } // −459.67 °F = 0.00 °Ra
+		// limit angles to temperature conversion display limits
+		if (angleDegrees > 5537.7) { angleDegrees = 5537.7; } //  5537.7 °C = 9999.9 °F (display limit)
+		if (angleDegrees < -459.6) { angleDegrees = -459.6; } // −459.67 °F = 0.00 °Ra (absolute zero)
 
 		//  adjust range
 		if (displayType === 'compass') {
@@ -200,8 +200,9 @@ const DegreesWhat = (function() {
 	function getPointerOffset(e) {
 		// get angle where the pointer entered the compass overlay and save as angleOffset
 		e.preventDefault();
+		// convert screen coordinates to angle (negative Y because screen Y increases downward)
 		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
-		if (displayType === 'compass') { angleRadians -= tau/4; } // - 90° CCW
+		if (displayType === 'compass') { angleRadians -= tau/4; } // rotate to compass orientation (0° = North)
 		angleOffset = (angleRadians/tau * 360) - angleDegrees;
 	}
 
@@ -209,9 +210,10 @@ const DegreesWhat = (function() {
 		// get pointer position and calculate angle
 		// note atan2(y,x) gives the counterclockwise angle, in radians, between the +ve x-axis and the point (x,y)
 		e.preventDefault();
+		// convert screen coordinates to angle (negative Y because screen Y increases downward)
 		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
 		if (displayType === 'compass') {
-			angleRadians -= tau/4;  // - 90° CCW
+			angleRadians -= tau/4;  // rotate to compass orientation (0° = North)
 			angleDegrees = angleRadians/tau * 360 - angleOffset;
 		} else {
 			angleDegrees = angleRadians/tau * 360;
@@ -361,10 +363,8 @@ const DegreesWhat = (function() {
 		getSize();
 
 		// get query string, update angle
-		if (location.search) {
-			angleDegrees = Number(location.search.substring(1)) || 0;
-			angleRadians = angleDegrees/360 * tau;
-		}
+		angleDegrees = getAngleFromURL();
+		angleRadians = angleDegrees/360 * tau;
 		updateAngle();
 
 		// mouse & touch
