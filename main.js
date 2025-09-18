@@ -29,43 +29,43 @@ const DegreesWhat = (function() {
 	function drawCompass() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
 			textOffset = 4, // tweak text position
-			angle, scale,
-			str1 = '',
-			str2 = '';
+			angle, scale;
 
 		// marks
+		const marks = [];
 		for (let i=0; i<360; i++) {
 			let length = 5;
 			if ((i % 5)  === 0) { length = 9;}
 			if ((i % 15) === 0) { length = 15; }
-			str1 += `<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`;
+			marks.push(`<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`);
 		}
-		$('#degreeMarks').innerHTML = str1;
+		$('#degreeMarks').innerHTML = marks.join('');
 
 		// numbers
+		const numbers = [];
 		for (let i=0; i<360; i+=15) {
 			angle = i + 180;
-			str2 += `
+			numbers.push(`
 				<g x="0" y="0" transform="rotate(${angle}) translate(0,${radius - h * textOffset})">
 					<text x="0" y="0" transform="rotate(180)">${i}</text>
-				</g>`;
+				</g>`);
 		}
 
 		// points of the compass
-		let points = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+		const points = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 		for (let i=0; i<16; i++) {
 			angle = (i * 360/16 + 180);
 			scale = 1.3;
 			if (i%2 === 0) { scale = 2; }
 			if ((i%4 === 0)) { scale = 3.1; }
 
-			str2 += `
+			numbers.push(`
 				<g x="0" y="0" transform="rotate(${angle}) translate(0,${radius - h * 2.5 * textOffset}) scale(${scale})">
 					<polygon points="0,8.5 1.5,6 -1.5,6" />
 					<text x="0" y="0" transform="rotate(180)" font-size="5px">${points[i]}</text>
-				</g>`;
+				</g>`);
 		}
-		$('#degreeNumbers').innerHTML = str2;
+		$('#degreeNumbers').innerHTML = numbers.join('');
 
 		// adjust text position
 		$('#text1').setAttribute('transform', 'translate(0,-22)');
@@ -80,32 +80,32 @@ const DegreesWhat = (function() {
 	function drawProtractor() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
 			textOffset = 4, // tweak text position
-			length, angle, angle2, yPos,
-			str1 = '',
-			str2 = '';
+			length, angle, angle2, yPos;
 
 		// marks
+		const marks = [];
 		for (let i=0; i<360; i++) {
 			length = 5;
 			if ((i % 5)  === 0) { length = 9;}
 			if ((i % 10) === 0) { length = radius-15; }
 			if ((i % 90) === 0) { length = radius; }
-			str1 += `<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`;
+			marks.push(`<line x1="0" y1="${radius}" x2="0" y2="${radius-length}" transform="rotate(${i})" />`);
 		}
-		$('#degreeMarks').innerHTML = str1;
+		$('#degreeMarks').innerHTML = marks.join('');
 
 		// numbers
+		const numbers = [];
 		for (let i=-170; i<=180; i+=10) {
 			angle = (i+90) * -1;
 			angle2 = ((i >= 0) && (i <= 180)) ? 180 : 0;
 			yPos   = ((i >= 0) && (i <= 180)) ? 0 : (h*0.75);
-			str2 += `
+			numbers.push(`
 				<g x="0" y="0" transform="rotate(${angle}) translate(0,${radius - h * textOffset})">
 					<rect x="-1" y="${-h*0.7}" width="2" height="${h*2.1}" fill="#fff" />
 					<text x="0" y="${yPos}" transform="rotate(${angle2})">${i}</text>
-				</g>`;
+				</g>`);
 		}
-		$('#degreeNumbers').innerHTML = str2;
+		$('#degreeNumbers').innerHTML = numbers.join('');
 
 		// adjust text position
 		$('#text1').setAttribute('transform', 'translate(0,-45)');
