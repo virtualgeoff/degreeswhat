@@ -24,7 +24,10 @@ const DegreesWhat = (function() {
 		displayType,  // 'compass' | 'protractor'
 		snap,         // true | false
 		colorScheme,  // 'light' | 'dark' | 'auto'
-		compass, compassCard, angleIndicator, compassOverlay;
+		compass, compassCard, angleIndicator, compassOverlay,
+		// touch event throttling variables
+		isUpdating = false,
+		pendingPointerEvent = null;
 
 	function drawCompass() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
@@ -221,6 +224,23 @@ const DegreesWhat = (function() {
 		updateAngle();
 	}
 
+	function throttledGetPointerAngle(e) {
+		// throttle pointer events using requestAnimationFrame for better performance on low-end devices
+		pendingPointerEvent = e;
+		
+		// only schedule update if none is pending
+		if (!isUpdating) {
+			isUpdating = true;
+			requestAnimationFrame(() => {
+				if (pendingPointerEvent) {
+					getPointerAngle(pendingPointerEvent);
+					pendingPointerEvent = null;
+				}
+				isUpdating = false;
+			});
+		}
+	}
+
 	function getSize(e) {
 		//console.log(e);
 		center = {x:compass.clientWidth/2, y:compass.clientHeight/2};
@@ -367,8 +387,8 @@ const DegreesWhat = (function() {
 		angleRadians = angleDegrees/360 * tau;
 		updateAngle();
 
-		// mouse & touch
-		compassOverlay.addEventListener("pointermove", getPointerAngle);
+		// mouse & touch (throttled for performance on low-end devices)
+		compassOverlay.addEventListener("pointermove", throttledGetPointerAngle);
 		compassOverlay.addEventListener("pointerover", getPointerOffset);
 
 		// make overlays, handle section links
