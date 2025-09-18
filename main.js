@@ -268,7 +268,7 @@ const DegreesWhat = (function() {
 		  case 'colorScheme':
 			colorScheme = checkbox.value;
 			setItem('colorScheme', JSON.stringify(checkbox.value));
-			updatecolorScheme();
+			updateColorScheme();
 			break;
 		  default:
 			alert('wot?');
@@ -289,13 +289,13 @@ const DegreesWhat = (function() {
 
 		// colorScheme
 		colorScheme = getItem('colorScheme') || 'auto';
-		updatecolorScheme();
+		updateColorScheme();
 		$('#scheme_auto').checked  = (colorScheme === 'auto')  ? true : false;
 		$('#scheme_light').checked = (colorScheme === 'light') ? true : false;
 		$('#scheme_dark').checked  = (colorScheme === 'dark')  ? true : false;
 	}
 
-	function updatecolorScheme() {
+	function updateColorScheme() {
 		document.documentElement.classList.remove('light', 'dark'); //reset values
 		if (colorScheme === 'light') {
 			document.documentElement.classList.add('light');

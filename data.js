@@ -5,7 +5,7 @@
 /* jshint esversion: 6 */
 /* globals $, $All */
 
-var degreesData = {
+const degreesData = {
 	// interesting angles (in °)
 	angles: [
 		[
