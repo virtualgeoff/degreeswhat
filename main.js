@@ -16,6 +16,8 @@ const DegreesWhat = (function() {
 
 	const radius = 130;
 	const tau = 2 * Math.PI;
+	const minAngle = -9999.9;
+	const maxAngle =  9999.9;
 
 	let center,
 		angleDegrees = 0,
@@ -132,17 +134,18 @@ const DegreesWhat = (function() {
 			G    = (d * 10/9).toFixed(1),                                      // gradians (gon)
 			C    = ((d >= -273.15) ? D : '—'),                                 // Celsius (or dash if below absolute zero)
 			CtoF = ((d >= -273.15) ? (d * 9/5 + 32).toFixed(1) : '—'),         // Celsius to Fahrenheit
-			CtoK = ((d >= -273.15) ? (d + 273.15).toFixed(2) : '—'),           // Celsius to Kelvin
-			CtoR = ((d >= -273.15) ? (d * 9/5 + 491.67).toFixed(2) : '—'),     // Celsius to Rankine
-			FtoC = ((d-32) * 5/9).toFixed(1),                                  // Fahrenheit to Celsius
-			FtoK = ((d + 459.67) * 5/9).toFixed(2),                            // Fahrenheit to Kelvin
-			FtoR = (d + 459.67).toFixed(2);                                    // Fahrenheit to Rankine
+			CtoK = ((d >= -273.15) ? (d + 273.15).toFixed(1) : '—'),           // Celsius to Kelvin
+			CtoR = ((d >= -273.15) ? (d * 9/5 + 491.67).toFixed(1) : '—'),     // Celsius to Rankine
+			F    = ((d >= -459.67) ? D : '—'),                                 // Fahrenheit (or dash if below absolute zero)
+			FtoC = ((d >= -459.67) ? ((d - 32) * 5/9).toFixed(1) : '—'),       // Fahrenheit to Celsius
+			FtoK = ((d >= -459.67) ? ((d + 459.67) * 5/9).toFixed(1) : '—'),   // Fahrenheit to Kelvin
+			FtoR = ((d >= -459.67) ? (d + 459.67).toFixed(1) : '—');           // Fahrenheit to Rankine
 
 		// big text
 		$('#textAngle').textContent = `${D}°`;
 		$('#textC').textContent     = `${C} °C = `;
 		$('#textCtoF').textContent  = `${CtoF} °F`;
-		$('#textF').textContent     = `${D} °F = `;
+		$('#textF').textContent     = `${F} °F = `;
 		$('#textFtoC').textContent  = `${FtoC} °C`;
 
 		// info1
@@ -155,7 +158,7 @@ const DegreesWhat = (function() {
 			<dd>${CtoF} °F<br>
 				${CtoK} K<br>
 				${CtoR} °Ra</dd>
-			<dt>${D} °F = </dt>
+			<dt>${F} °F = </dt>
 			<dd>${FtoC} °C<br>
 				${FtoK} K<br>
 				${FtoR} °Ra</dd>`;
@@ -167,29 +170,24 @@ const DegreesWhat = (function() {
 	}
 
 	function updateAngle() {
-		// limit angles to temperature conversion display limits
-		if (angleDegrees > 5537.7) { angleDegrees = 5537.7; } //  5537.7 °C = 9999.9 °F (display limit)
-		if (angleDegrees < -459.6) { angleDegrees = -459.6; } // −459.67 °F = 0.00 °Ra (absolute zero)
+		// limit angles to display limits
+		if (angleDegrees > maxAngle) { angleDegrees = maxAngle; }
+		if (angleDegrees < minAngle) { angleDegrees = minAngle; }
 
-		//  adjust range
+		// snap to nearest degree?
+		if (snap) { angleDegrees = Math.round(angleDegrees); }
+		
+		// adjust range
 		if (displayType === 'compass') {
 			angleDegrees = (angleDegrees + 360) % 360; // 0 <= angle < 360;
 		}
 
-		// snap to nearest degree?
-		if (snap) {
-			angleDegrees = Math.round(angleDegrees);
-		}
-
-		//  rotate compass card or indicator line
+		// rotate compass card or indicator line
 		if (displayType === 'compass') {
 			compassCard.setAttribute('transform', `rotate(${-angleDegrees})`);
 		} else {
 			angleIndicator.setAttribute('transform', `rotate(${-angleDegrees})`);
 		}
-
-		// update text
-		updateInfo();
 	}
 
 	function setDisplayType(value) {
@@ -200,30 +198,37 @@ const DegreesWhat = (function() {
 			drawProtractor();
 		}
 		updateAngle();
+		updateInfo();
 	}
 
 	function getPointerOffset(e) {
 		// get angle where the pointer entered the compass overlay and save as angleOffset
 		e.preventDefault();
-		// convert screen coordinates to angle (negative Y because screen Y increases downward)
+
+		// convert screen coordinates to angle (see below)
 		let pointerAngle = toDegrees(-1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x)) );
-		if (displayType === 'compass') { pointerAngle -= 90; } // rotate to compass orientation (0° = North)
-		angleOffset = pointerAngle - angleDegrees;
+		if (displayType === 'compass') {
+			angleOffset = pointerAngle - 90 - angleDegrees;
+		} else {
+			angleOffset = 0; // not needed for protractor
+		}
 	}
 
 	function getPointerAngle(e) {
 		// get pointer position and calculate angle
 		e.preventDefault();
-		// convert screen coordinates to angle (negative Y because screen Y increases downward)
+
+		// convert screen coordinates to angle
 		// note atan2(y,x) gives the counterclockwise angle, in radians, between the +ve x-axis and the point (x,y)
+		// angle will be in range -π to π (-180° to 180°)
 		let pointerAngle = toDegrees(-1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x)) );
 		if (displayType === 'compass') {
-			pointerAngle -= 90;  // rotate to compass orientation (0° = North)
-			angleDegrees = pointerAngle - angleOffset;
+			angleDegrees = pointerAngle - 90 - angleOffset;
 		} else {
 			angleDegrees = pointerAngle;
 		}
 		updateAngle();
+		updateInfo();
 	}
 
 	function throttledGetPointerAngle(e) {
@@ -304,6 +309,7 @@ const DegreesWhat = (function() {
 			snap = checkbox.checked;
 			setItem('snap', JSON.stringify(checkbox.checked));
 			updateAngle();
+			updateInfo();
 			break;
 		  case 'displayType':
 			setDisplayType(checkbox.value);
@@ -356,16 +362,16 @@ const DegreesWhat = (function() {
 			const param = location.search.substring(1);
 			const angle = parseFloat(param);
 			
-			// Validate the number
+			// validate parameter is a number
 			if (isNaN(angle) || !isFinite(angle)) {
-				alert(`Invalid angle parameter: ${param}`);
+				console.log(`Invalid angle parameter: ${param}`);
 				return 0;
 			}
 			
-			// Apply reasonable bounds (temperature limits will be handled separately)
-			const clampedAngle = Math.max(-999, Math.min(9999, angle));
+			// check inside limits
+			const clampedAngle = Math.max(minAngle, Math.min(maxAngle, angle));
 			if (clampedAngle !== angle) {
-				alert(`Angle parameter out of range: ${angle}° clamped to ${clampedAngle}°`);
+				console.log(`Angle parameter out of range: ${angle}° clamped to ${clampedAngle}°`);
 			}
 			
 			return clampedAngle;
@@ -386,6 +392,7 @@ const DegreesWhat = (function() {
 
 		// get query string, update angle
 		angleDegrees = getAngleFromURL();
+		updateInfo(); // update info first, so can convert temps outside angle limits
 		updateAngle();
 
 		// mouse & touch (throttled for performance on low-end devices)

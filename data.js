@@ -254,6 +254,7 @@ const degreesData = {
 		// show info if query string present
 		if (location.search) {
 			let d = Number(location.search.substring(1)) || 0;
+			if (d < -459.67) { d = -459.67; }
 			degreesData.showInfo(d);
 		} else {
 			degreesData.showInfo(0);
