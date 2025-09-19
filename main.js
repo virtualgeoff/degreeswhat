@@ -18,7 +18,6 @@ const DegreesWhat = (function() {
 	const tau = 2 * Math.PI;
 
 	let center,
-		angleRadians = 0,
 		angleDegrees = 0,
 		angleOffset  = 0,
 		displayType,  // 'compass' | 'protractor'
@@ -28,6 +27,10 @@ const DegreesWhat = (function() {
 		// touch event throttling variables
 		isUpdating = false,
 		pendingPointerEvent = null;
+
+	function toDegrees(radians) {
+		return radians * 360 / tau;
+	}
 
 	function drawCompass() {
 		let h = parseFloat($('#degreeNumbers').getAttribute('font-size')),
@@ -124,7 +127,7 @@ const DegreesWhat = (function() {
 		// calculate display values for angles and temperature conversions
 		let D    = angleDegrees.toFixed(1),                                    // degrees (formatted)
 			d    = Number(D),                                                  // degrees (numeric)
-			R    = angleRadians.toFixed(2),                                    // radians
+			R    = (angleDegrees/360 * tau).toFixed(2),                        // radians
 			T    = (d/360).toFixed(2),                                         // turns (revolutions)
 			G    = (d * 10/9).toFixed(1),                                      // gradians (gon)
 			C    = ((d >= -273.15) ? D : '—'),                                 // Celsius (or dash if below absolute zero)
@@ -172,7 +175,6 @@ const DegreesWhat = (function() {
 		if (displayType === 'compass') {
 			angleDegrees = (angleDegrees + 360) % 360; // 0 <= angle < 360;
 		}
-		angleRadians = angleDegrees/360 * tau;
 
 		// snap to nearest degree?
 		if (snap) {
@@ -204,22 +206,22 @@ const DegreesWhat = (function() {
 		// get angle where the pointer entered the compass overlay and save as angleOffset
 		e.preventDefault();
 		// convert screen coordinates to angle (negative Y because screen Y increases downward)
-		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
-		if (displayType === 'compass') { angleRadians -= tau/4; } // rotate to compass orientation (0° = North)
-		angleOffset = (angleRadians/tau * 360) - angleDegrees;
+		let pointerAngle = toDegrees(-1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x)) );
+		if (displayType === 'compass') { pointerAngle -= 90; } // rotate to compass orientation (0° = North)
+		angleOffset = pointerAngle - angleDegrees;
 	}
 
 	function getPointerAngle(e) {
 		// get pointer position and calculate angle
-		// note atan2(y,x) gives the counterclockwise angle, in radians, between the +ve x-axis and the point (x,y)
 		e.preventDefault();
 		// convert screen coordinates to angle (negative Y because screen Y increases downward)
-		angleRadians = -1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x));
+		// note atan2(y,x) gives the counterclockwise angle, in radians, between the +ve x-axis and the point (x,y)
+		let pointerAngle = toDegrees(-1 * Math.atan2((e.offsetY-center.y), (e.offsetX-center.x)) );
 		if (displayType === 'compass') {
-			angleRadians -= tau/4;  // rotate to compass orientation (0° = North)
-			angleDegrees = angleRadians/tau * 360 - angleOffset;
+			pointerAngle -= 90;  // rotate to compass orientation (0° = North)
+			angleDegrees = pointerAngle - angleOffset;
 		} else {
-			angleDegrees = angleRadians/tau * 360;
+			angleDegrees = pointerAngle;
 		}
 		updateAngle();
 	}
@@ -384,7 +386,6 @@ const DegreesWhat = (function() {
 
 		// get query string, update angle
 		angleDegrees = getAngleFromURL();
-		angleRadians = angleDegrees/360 * tau;
 		updateAngle();
 
 		// mouse & touch (throttled for performance on low-end devices)
