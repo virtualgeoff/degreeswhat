@@ -81,15 +81,15 @@ const degreesData = {
 			[34,     "is the angle of repose of dry sand"],
 			[38,     "is the angle of repose of snow"],
 			[45,     "is the angle of repose of gravel and wet sand"],
-			[104.45, "is the angle of between the hydrogen atoms in a water molecule"],
-			[109.5,  "is the angle of between the hydrogen atoms in a methane molecule"],
+			[104.45, "is the angle between the hydrogen atoms in a water molecule"],
+			[109.5,  "is the angle between the hydrogen atoms in a methane molecule"],
 		],[
 			// polygons
 			[60,     "equilateral triangle"],
 			[90,     "square (a right angle)"],
 			[108,    "pentagon"],
 			[120,    "hexagon"],
-			[128.57, "heptagon (128<sup>4</sup>⁄<sub>7</sub>° exactly)"],
+			[128.57, "heptagon (128<sup>4</sup>&frasl;<sub>7</sub>° exactly)"],
 			[135,    "octagon"],
 			[140,    "nonagon"],
 			[144,    "decagon"],
@@ -180,6 +180,7 @@ const degreesData = {
 	},
 
 	writeToPage: function() {
+		// write all the data to the page (#info2)
 		let d,
 			str1 = '';
 
@@ -278,4 +279,6 @@ const degreesData = {
 // Example: validateDataIntegrity(degreesData.angles, degreesData.temperatures);
 // Should check: array lengths, data types, value ranges, required fields
 
+
+// write all interesting angles to page on load (hidden by default)
 window.addEventListener('load', degreesData.writeToPage);
